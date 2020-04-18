@@ -10,9 +10,9 @@ namespace Aiapps.Nfce.Api
 {
     public class NfceApi : TokenApi
     {
-        public string Route { get; set; } = "api/nfce";
-        public string RouteCancel { get; set; } = "api/nfce/cancelar";
-        public string RouteDanfe { get; set; } = "api/nfce/baixardanfe";
+        private string _route = "api/nfce";
+        private string _routeCancel = "api/nfce/cancelar";
+        private string _routeDanfe = "api/nfce/baixardanfe";
 
         private Credencial _credencial;
         private bool shouldUseCache = true;
@@ -47,7 +47,7 @@ namespace Aiapps.Nfce.Api
                           .Accept
                           .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    var response = await httpClient.PostAsync(Route, nfce.AsJson());
+                    var response = await httpClient.PostAsync(_route, nfce.AsJson());
 
                     if (shouldUseCache && response.StatusCode == HttpStatusCode.Unauthorized)
                     {
