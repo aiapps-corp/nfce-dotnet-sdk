@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Aiapps.Nfce.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class NfceServiceTest
     {
         [TestMethod]
         public void TestMethod1()
