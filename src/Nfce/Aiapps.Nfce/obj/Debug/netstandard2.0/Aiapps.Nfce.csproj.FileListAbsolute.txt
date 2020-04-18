@@ -1,9 +1,0 @@
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\bin\Debug\netstandard2.0\Aiapps.Nfce.deps.json
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\bin\Debug\netstandard2.0\Aiapps.Nfce.dll
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\obj\Debug\netstandard2.0\Aiapps.Nfce.csprojAssemblyReference.cache
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\obj\Debug\netstandard2.0\Aiapps.Nfce.AssemblyInfoInputs.cache
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\obj\Debug\netstandard2.0\Aiapps.Nfce.AssemblyInfo.cs
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\bin\Debug\netstandard2.0\Aiapps.Nfce.pdb
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\obj\Debug\netstandard2.0\Aiapps.Nfce.csproj.CoreCompileInputs.cache
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\obj\Debug\netstandard2.0\Aiapps.Nfce.dll
-C:\Users\paulo\source\repos\aiapps-corp\nfce-dotnet-sdk\src\Nfce\Aiapps.Nfce\obj\Debug\netstandard2.0\Aiapps.Nfce.pdb
