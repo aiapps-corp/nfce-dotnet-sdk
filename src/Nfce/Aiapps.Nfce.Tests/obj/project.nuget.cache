@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "eGBt0EABz9WOxKwe597SPiLPrm/id6pmtWKBu1/McnRqb4H6w9D5RXgdgWrUxpUFyZm+uKvba9GOiaYqR78Nxg==",
+  "dgSpecHash": "K/hWb+73o/fnFfpiS3zhr65EC9nVfRK50n3KRn0RlWdLrO51TNUpwQjc77T31A/vFDqqJMsK/+kQQs7DMh6uDQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\paulo\\source\\repos\\aiapps-corp\\nfce-dotnet-sdk\\src\\Nfce\\Aiapps.Nfce.Tests\\Aiapps.Nfce.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\paulo\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",
+    "C:\\Users\\paulo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\microsoft.net.test.sdk\\16.5.0\\microsoft.net.test.sdk.16.5.0.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
