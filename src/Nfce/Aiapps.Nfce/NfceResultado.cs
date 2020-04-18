@@ -6,5 +6,6 @@ namespace Aiapps.Nfce
 {
     public class NfceResultado
     {
+        public string Erro { get; set; }
     }
 }

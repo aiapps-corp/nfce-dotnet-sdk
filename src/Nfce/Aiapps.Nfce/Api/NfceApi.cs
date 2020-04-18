@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -55,7 +56,7 @@ namespace Aiapps.Nfce.Api
                     }
 
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    result = Parse(responseContent);
+                    result = JsonConvert.DeserializeObject<NfceResultado>(responseContent);
                     if (response.StatusCode == HttpStatusCode.Conflict)
                     {
                         result.Erro = $"Pedido {nfce.Referencia} já foi enviado";
