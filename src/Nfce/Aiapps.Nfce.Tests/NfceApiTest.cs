@@ -10,19 +10,21 @@ namespace Aiapps.Nfce.Tests
         [TestMethod]
         public async Task EmitirAsync_Credencial_Invalida_Test()
         {
-            var nfceApi = new NfceApi(new Credencial { 
+            var nfceApi = new NfceApi(new Credencial
+            {
                 Email = "",
                 Senha = ""
             });
-            var response = await nfceApi.EmitirAsync(new Nfce { 
-            
+            var response = await nfceApi.EmitirAsync(new Nfce
+            {
+
             });
 
             Assert.AreEqual("Credêncial inválida para emissão de nfc-e", response.Erro);
         }
 
         [TestMethod]
-        public async Task EmitirAsync_Test()
+        public async Task EmitirAsync_RequisicaoInvalida_Test()
         {
             var nfceApi = new NfceApi(new Credencial
             {
@@ -31,8 +33,26 @@ namespace Aiapps.Nfce.Tests
             });
             var response = await nfceApi.EmitirAsync(new Nfce
             {
-
+                Referencia = "1",
+                Itens = new Item[] {
+                    new Item {
+                        Cfop = "5.102",
+                        NCM = "2203.00.00",
+                        ProdutoId = "1",
+                        ProdutoNome = "Cerveja",
+                        Quantidade = 1,
+                        ValorUnitario = 5m
+                    }
+                },
+                Pagamentos = new Pagamento[] {
+                    new Pagamento {
+                        Tipo = "01",
+                        Valor = 5
+                    }
+                },
+                Desconto = 0,
             });
+            Assert.AreEqual("Requisição inválida", response.Erro);
         }
     }
 }

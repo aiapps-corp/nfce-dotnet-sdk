@@ -6,7 +6,7 @@ namespace Aiapps.Nfce
 {
     public class Item
     {
-        public string Produto { get; set; }
+        public string ProdutoId { get; set; }
         public string ProdutoNome { get; set; }
         public decimal Quantidade { get; set; }
         public decimal ValorUnitario { get; set; }

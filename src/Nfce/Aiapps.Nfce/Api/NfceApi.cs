@@ -15,7 +15,7 @@ namespace Aiapps.Nfce.Api
         private string _routeDanfe = "api/nfce/baixardanfe";
 
         private Credencial _credencial;
-        private bool shouldUseCache = true;
+        private bool _shouldUseCache = true;
         public NfceApi(Credencial credencial)
         {
             _credencial = credencial;
@@ -47,11 +47,13 @@ namespace Aiapps.Nfce.Api
                           .Accept
                           .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    var response = await httpClient.PostAsync(_route, nfce.AsJson());
+                    var message = nfce.AsJson();
+                    var response = await httpClient.PostAsync(_route, message);
 
-                    if (shouldUseCache && response.StatusCode == HttpStatusCode.Unauthorized)
+                    if (_shouldUseCache && response.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        shouldUseCache = false;
+                        _shouldUseCache = false;
+                        _credencial.Token = null;
                         return await EmitirAsync(nfce);
                     }
 
@@ -60,6 +62,11 @@ namespace Aiapps.Nfce.Api
                     if (response.StatusCode == HttpStatusCode.Conflict)
                     {
                         result.Erro = $"Pedido {nfce.Referencia} já foi enviado";
+                    }
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                        result.Erro = $"{obj?.message}";
                     }
                 }
             }

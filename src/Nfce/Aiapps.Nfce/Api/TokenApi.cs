@@ -10,7 +10,11 @@ namespace Aiapps.Nfce.Api
 {
     public abstract class TokenApi
     {
+#if DEBUG
+        public string BaseHttpsAddress { get; set; } = "http://localhost:3000";
+#else
         public string BaseHttpsAddress { get; set; } = "https://mobi.aiapps.com.br";
+#endif
         protected static HttpClientHandler clientHandler = new HttpClientHandler();
         protected async Task<string> Token(string username, string password)
         {
