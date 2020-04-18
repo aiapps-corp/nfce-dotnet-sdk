@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Aiapps.Nfce.Api
         public string RouteDanfe { get; set; } = "api/nfce/baixardanfe";
 
         private Credencial _credencial;
+        private bool shouldUseCache = true;
         public NfceApi(Credencial credencial)
         {
             _credencial = credencial;
@@ -44,50 +46,19 @@ namespace Aiapps.Nfce.Api
                           .Accept
                           .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    object obj = null;
-                    if (Route == "api/nfce")
-                    {
-                        obj = new
-                        {
-                            Referencia = nfce.PedidoPOSId.ToString(),
-                            nfce.DataHora,
-                            Cfop = "5.405",
-                            Cliente = nfce.Cliente.Documento,
-                            ClienteCompleto = clienteCompleto,
-                            ContaCliente = nfce.Cliente.Conta,
-                            Vendedor = "",
-                            nfce.PontoVenda,
-                            itens,
-                            Pagamentos = pagamentos,
-                            nfce.Desconto,
-                        };
-                    }
-                    else
-                    {
-                        obj = new
-                        {
-                            Referencia = nfce.PedidoPOSId.ToString(),
-                            nfce.DataHora,
-                            Cfop = "5.405",
-                            Cliente = clienteCompleto,
-                            ContaCliente = nfce.Cliente.Conta,
-                            Vendedor = "",
-                            nfce.PontoVenda,
-                            itens,
-                            Pagamentos = pagamentos,
-                            nfce.Desconto,
-                        };
-                    }
-                    var response = await client.PostAsync(Route, obj.AsJson());
+                    var response = await httpClient.PostAsync(Route, nfce.AsJson());
 
                     if (shouldUseCache && response.StatusCode == HttpStatusCode.Unauthorized)
-                        return await EmitirAsync(nfce, false);
+                    {
+                        shouldUseCache = false;
+                        return await EmitirAsync(nfce);
+                    }
 
                     var responseContent = await response.Content.ReadAsStringAsync();
                     result = Parse(responseContent);
                     if (response.StatusCode == HttpStatusCode.Conflict)
                     {
-                        result.Erro = $"Pedido {nfce.PedidoPOSId} já foi enviado";
+                        result.Erro = $"Pedido {nfce.Referencia} já foi enviado";
                     }
                 }
             }
