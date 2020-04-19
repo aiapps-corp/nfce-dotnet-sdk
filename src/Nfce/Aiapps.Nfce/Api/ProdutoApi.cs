@@ -18,38 +18,62 @@ namespace Aiapps.Nfce.Api
             _credencial = credencial ?? new Credencial();
         }
 
-        public async Task CadastrarOuAtualizarAsync(Produto produto)
+        public async Task<Retorno> CadastrarOuAtualizarAsync(Produto produto)
         {
             var response = await HttpAtualizarAsync(produto);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                response = await HttpAtualizarAsync(produto);
+            }
+
             if (response.StatusCode == HttpStatusCode.NotFound)
                 response = await HttpCadastrarAsync(produto);
 
+            var retorno = new Retorno { Sucesso = true };
             if (response.IsSuccessStatusCode == false)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                throw new InvalidOperationException("Falha ao sincronizar produto (Emissão de NFC-e)", new Exception(responseContent));
+                retorno.Sucesso = false;
+                retorno.Mensagem = $"Falha ao sincronizar produto (Emissão de NFC-e) {responseContent}";                
             }
+            return retorno;
         }
 
-        public async Task Remover(string id)
+        public async Task<Retorno> Remover(string id)
         {
-            var error = "Falha ao remover produto (Emissão de NFC-e)";
             var response = await HttpRemoverAsync(id);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                response = await HttpRemoverAsync(id);
+            }
+            var retorno = new Retorno { Sucesso = true };
             if (response.IsSuccessStatusCode == false)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                throw new InvalidOperationException(error, new Exception(responseContent));
+                retorno.Sucesso = false;
+                retorno.Mensagem = $"Falha ao remover produto (Emissão de NFC-e) {responseContent}";
             }
+            return retorno;
         }
 
-        public async Task Entregar(Entrega entrega)
+        public async Task<Retorno> Entregar(Entrega entrega)
         {
             var response = await HttpEntregarAsync(entrega);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                response = await HttpEntregarAsync(entrega);
+            }
+            var retorno = new Retorno { Sucesso = true };
             if (response.IsSuccessStatusCode == false)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                throw new InvalidOperationException("Falha ao entregar produto (Emissão de NFC-e)", new Exception(responseContent));
+                retorno.Sucesso = false;
+                retorno.Mensagem = $"Falha ao entregar produto (Emissão de NFC-e) {responseContent}";
             }
+            return retorno;
         }
 
         private async Task<HttpResponseMessage> HttpCadastrarAsync(Produto produto)
@@ -75,7 +99,7 @@ namespace Aiapps.Nfce.Api
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
 
-                var url = $"api/produtos?id={(produto.Referencia)}";
+                var url = $"api/produtos?id={(produto.Id)}";
                 var message = produto.AsJson();
                 var response = await httpClient.PutAsync(url, message);
                 return response;
