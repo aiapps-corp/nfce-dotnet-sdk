@@ -4,9 +4,7 @@ using System.Text;
 
 namespace Aiapps.Nfce
 {
-    public class Vendedor
+    public class Vendedor : Operador
     {
-        public string Documento { get; set; }
-        public string Nome { get; set; }
     }
 }

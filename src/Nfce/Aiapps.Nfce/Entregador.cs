@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Aiapps.Nfce
 {
-    public class Transportador : Operador
+    public class Entregador : Operador
     {
     }
 }
