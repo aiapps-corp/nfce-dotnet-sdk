@@ -24,12 +24,12 @@ namespace Aiapps.Nfce.Api
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="nfce"></param>
+        /// <param name="pedido"></param>
         /// <param name="shouldUseCache"></param>
         /// <returns></returns>
-        public async Task<NfceResultado> EmitirAsync(Nfce nfce)
+        public async Task<Nfce> EmitirAsync(Pedido pedido)
         {
-            var result = new NfceResultado();
+            var nfce = new Nfce();
             try
             {
                 if (string.IsNullOrWhiteSpace(_credencial.Email) &&
@@ -47,34 +47,34 @@ namespace Aiapps.Nfce.Api
                           .Accept
                           .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    var message = nfce.AsJson();
+                    var message = pedido.AsJson();
                     var response = await httpClient.PostAsync(_route, message);
 
                     if (_shouldUseCache && response.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         _shouldUseCache = false;
                         _credencial.Token = null;
-                        return await EmitirAsync(nfce);
+                        return await EmitirAsync(pedido);
                     }
 
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<NfceResultado>(responseContent);
+                    nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
                     if (response.StatusCode == HttpStatusCode.Conflict)
                     {
-                        result.Erro = $"Pedido {nfce.Referencia} já foi enviado";
+                        nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
                     }
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
                         var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                        result.Erro = $"{obj?.message}";
+                        nfce.Erro = $"{obj?.message}";
                     }
                 }
             }
             catch (Exception ex)
             {
-                result.Erro = ex.Message;
+                nfce.Erro = ex.Message;
             }
-            return result;
+            return nfce;
         }
     }
 }

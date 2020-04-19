@@ -8,6 +8,5 @@ namespace Aiapps.Nfce
     {
         public string Documento { get; set; }
         public string Nome { get; set; }
-
     }
 }
