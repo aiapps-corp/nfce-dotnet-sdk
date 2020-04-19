@@ -15,7 +15,7 @@ namespace Aiapps.Nfce.Tests
                 Email = "",
                 Senha = ""
             });
-            var response = await nfceApi.EmitirAsync(new Nfce
+            var response = await nfceApi.EmitirAsync(new Pedido
             {
 
             });
@@ -31,7 +31,7 @@ namespace Aiapps.Nfce.Tests
                 Email = "teste@aiapps.com.br",
                 Senha = "123456"
             });
-            var response = await nfceApi.EmitirAsync(new Nfce
+            var response = await nfceApi.EmitirAsync(new Pedido
             {
                 Referencia = "1",
                 Itens = new Item[] {
