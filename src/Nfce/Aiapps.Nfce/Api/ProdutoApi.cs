@@ -20,6 +20,9 @@ namespace Aiapps.Nfce.Api
 
         public async Task<Retorno> CadastrarOuAtualizarAsync(Produto produto)
         {
+            if (string.IsNullOrWhiteSpace(_credencial.Token))
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+
             var response = await HttpAtualizarAsync(produto);
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -42,6 +45,9 @@ namespace Aiapps.Nfce.Api
 
         public async Task<Retorno> Remover(string id)
         {
+            if (string.IsNullOrWhiteSpace(_credencial.Token))
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+
             var response = await HttpRemoverAsync(id);
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -60,6 +66,9 @@ namespace Aiapps.Nfce.Api
 
         public async Task<Retorno> Entregar(Entrega entrega)
         {
+            if (string.IsNullOrWhiteSpace(_credencial.Token))
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+
             var response = await HttpEntregarAsync(entrega);
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
