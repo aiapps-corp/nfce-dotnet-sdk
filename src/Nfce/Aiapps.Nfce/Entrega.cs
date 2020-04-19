@@ -10,5 +10,6 @@ namespace Aiapps.Nfce
         public Equipamento PontoEntrega { get; set; }
         public string ReferenciaPedido { get; set; }
         public string ProdutoId { get; set; }
+        public DateTime Data { get; set; }
     }
 }
