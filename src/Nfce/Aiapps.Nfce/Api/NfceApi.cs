@@ -42,10 +42,8 @@ namespace Aiapps.Nfce.Api
                 using (var httpClient = new HttpClient(clientHandler, false))
                 {
                     httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _credencial.Token);
-                    httpClient.DefaultRequestHeaders
-                          .Accept
-                          .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                    httpClient.DefaultRequestHeaders.AcceptApplicationJson();
 
                     var message = pedido.AsJson();
                     var response = await httpClient.PostAsync(_route, message);

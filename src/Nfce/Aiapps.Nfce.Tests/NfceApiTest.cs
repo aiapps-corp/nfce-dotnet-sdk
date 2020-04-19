@@ -34,7 +34,7 @@ namespace Aiapps.Nfce.Tests
             });
             var response = await nfceApi.EmitirAsync(new Pedido
             {
-                Referencia = "3",
+                Referencia = "6",
                 Itens = new Item[] {
                     new Item {
                         Cfop = "5.102",
