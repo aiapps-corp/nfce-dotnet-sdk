@@ -1,5 +1,6 @@
 using Aiapps.Nfce.Api;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace Aiapps.Nfce.Tests
@@ -24,7 +25,7 @@ namespace Aiapps.Nfce.Tests
         }
 
         [TestMethod]
-        public async Task EmitirAsync_RequisicaoInvalida_Test()
+        public async Task EmitirAsync_Credencial_Valida_Test()
         {
             var nfceApi = new NfceApi(new Credencial
             {
@@ -33,7 +34,7 @@ namespace Aiapps.Nfce.Tests
             });
             var response = await nfceApi.EmitirAsync(new Pedido
             {
-                Referencia = "1",
+                Referencia = "3",
                 Itens = new Item[] {
                     new Item {
                         Cfop = "5.102",
@@ -53,6 +54,16 @@ namespace Aiapps.Nfce.Tests
                 Desconto = 0,
             });
             Assert.AreEqual("Requisição inválida", response.Erro);
+        }
+
+        private string response = @"{'numero':null,'serie':null,'chaveAcesso':null,'situacao':null,'cliente':null,'valorTotal':10.0,'itens':[],'url':null,'sefaz':{'emitidoEm':'2020-01-01T00:00:00','protocolo':null,'url':null,'motivo':'Forma de pagamento é necessário.Se não tiver opções cadastre uma forma de pagamento em configurações.','codigoStatus':null}}";
+
+
+        [TestMethod]
+        public void Parse_Test()
+        {
+            var value = JsonConvert.DeserializeObject<Nfce>(response);
+            Assert.AreEqual("Forma de pagamento é necessário.Se não tiver opções cadastre uma forma de pagamento em configurações.", value.Sefaz.Motivo);
         }
     }
 }

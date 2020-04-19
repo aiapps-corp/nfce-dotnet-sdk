@@ -63,7 +63,7 @@ namespace Aiapps.Nfce.Api
                     {
                         nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
                     }
-                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
                     {
                         var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
                         nfce.Erro = $"{obj?.message}";

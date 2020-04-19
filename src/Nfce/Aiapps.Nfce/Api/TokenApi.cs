@@ -11,7 +11,7 @@ namespace Aiapps.Nfce.Api
     public abstract class TokenApi
     {
 #if DEBUG
-        public string BaseHttpsAddress { get; set; } = "http://localhost:3000";
+        public string BaseHttpsAddress { get; set; } = "https://mobi.aiapps.com.br";
 #else
         public string BaseHttpsAddress { get; set; } = "https://mobi.aiapps.com.br";
 #endif
