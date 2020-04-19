@@ -15,17 +15,16 @@ namespace Aiapps.Nfce.Api
         private string _routeDanfe = "api/nfce/baixardanfe";
 
         private Credencial _credencial;
-        private bool _shouldUseCache = true;
+
         public NfceApi(Credencial credencial)
         {
-            _credencial = credencial;
+            _credencial = credencial ?? new Credencial();
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pedido"></param>
-        /// <param name="shouldUseCache"></param>
         /// <returns></returns>
         public async Task<Nfce> EmitirAsync(Pedido pedido)
         {
@@ -39,33 +38,23 @@ namespace Aiapps.Nfce.Api
                 if (string.IsNullOrWhiteSpace(_credencial.Token))
                     _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-                using (var httpClient = new HttpClient(clientHandler, false))
+                var response = await HttpEmitirAsync(pedido);
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                    httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
-                    httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                    _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                    response = await HttpEmitirAsync(pedido);
+                }
 
-                    var message = pedido.AsJson();
-                    var response = await httpClient.PostAsync(_route, message);
-
-                    if (_shouldUseCache && response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        _shouldUseCache = false;
-                        _credencial.Token = null;
-                        return await EmitirAsync(pedido);
-                    }
-
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
-                    if (response.StatusCode == HttpStatusCode.Conflict)
-                    {
-                        nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
-                    }
-                    if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
-                    {
-                        var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                        nfce.Erro = $"{obj?.message}";
-                    }
+                var responseContent = await response.Content.ReadAsStringAsync();
+                nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
+                if (response.StatusCode == HttpStatusCode.Conflict)
+                {
+                    nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
+                }
+                if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
+                {
+                    var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                    nfce.Erro = $"{obj?.message}";
                 }
             }
             catch (Exception ex)
@@ -73,6 +62,75 @@ namespace Aiapps.Nfce.Api
                 nfce.Erro = ex.Message;
             }
             return nfce;
+        }
+
+        private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido) 
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+
+                var message = pedido.AsJson();
+                var response = await httpClient.PostAsync(_route, message);
+                return response;
+            }
+        }
+
+        public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)
+        {
+            if (string.IsNullOrWhiteSpace(_credencial.Token))
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+
+            var response = await HttpCancelarAsync(chaveAcesso, motivo);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                response = await HttpCancelarAsync(chaveAcesso, motivo);
+            }
+
+            return response.IsSuccessStatusCode;
+        }
+
+        private async Task<HttpResponseMessage> HttpCancelarAsync(string chaveAcesso, string motivo)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+
+                var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo }.AsJson());
+                return response;
+            }
+        }
+
+        public async Task<HttpResponseMessage> DanfeAsync(string chaveAcesso)
+        {
+            if (string.IsNullOrWhiteSpace(_credencial.Token))
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+
+            var response = await HttpDanfeAsync(chaveAcesso);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                response = await HttpDanfeAsync(chaveAcesso);
+            }
+            return response;
+        }
+
+        private async Task<HttpResponseMessage> HttpDanfeAsync(string chaveAcesso)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+
+                var response = await httpClient.GetAsync($"{_routeDanfe}?chaveAcesso={chaveAcesso}");
+                return response;
+            }
         }
     }
 }
