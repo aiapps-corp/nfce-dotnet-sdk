@@ -64,20 +64,6 @@ namespace Aiapps.Nfce.Api
             return nfce;
         }
 
-        private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido) 
-        {
-            using (var httpClient = new HttpClient(clientHandler, false))
-            {
-                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
-                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
-
-                var message = pedido.AsJson();
-                var response = await httpClient.PostAsync(_route, message);
-                return response;
-            }
-        }
-
         public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)
         {
             if (string.IsNullOrWhiteSpace(_credencial.Token))
@@ -93,19 +79,6 @@ namespace Aiapps.Nfce.Api
             return response.IsSuccessStatusCode;
         }
 
-        private async Task<HttpResponseMessage> HttpCancelarAsync(string chaveAcesso, string motivo)
-        {
-            using (var httpClient = new HttpClient(clientHandler, false))
-            {
-                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
-                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
-
-                var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo }.AsJson());
-                return response;
-            }
-        }
-
         public async Task<HttpResponseMessage> DanfeAsync(string chaveAcesso)
         {
             if (string.IsNullOrWhiteSpace(_credencial.Token))
@@ -118,6 +91,33 @@ namespace Aiapps.Nfce.Api
                 response = await HttpDanfeAsync(chaveAcesso);
             }
             return response;
+        }
+
+        private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+
+                var message = pedido.AsJson();
+                var response = await httpClient.PostAsync(_route, message);
+                return response;
+            }
+        }
+
+        private async Task<HttpResponseMessage> HttpCancelarAsync(string chaveAcesso, string motivo)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+
+                var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo }.AsJson());
+                return response;
+            }
         }
 
         private async Task<HttpResponseMessage> HttpDanfeAsync(string chaveAcesso)
