@@ -8,6 +8,12 @@ Criar uma conta de usuário no portal https://mobi.aiapps.com.br
 
 - Com essa conta já é possível usar a API.
 
+- Para emitir com sucesso uma NFC-e é necessário completar as informações da empresa e configurar o certificado digital: https://www.youtube.com/watch?v=6ZxWLVKValE
+
+- Criando um novo usuário: https://www.youtube.com/watch?v=QL1L1WKQ06Q
+- Configuração de imposto do produto: https://www.youtube.com/watch?v=b-BMGiyZzLg
+- Quando é cadastrado um novo produto com o mesmo NCM e CFOP de outro produto existente é utilizado as mesmas configurações tributárias.
+
 - Emitindo uma NFC-e
 ```C#
 
