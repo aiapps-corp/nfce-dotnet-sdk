@@ -8,6 +8,8 @@ namespace Aiapps.Nfce
     {
         public string Id { get; set; }
         public string Codigo { get; set; }
+        public string CodigoBarra { get; set; }
+        
         public string Nome { get; set; }
         public string Ncm { get; set; }
         public string Cfop { get; set; }
