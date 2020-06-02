@@ -18,8 +18,6 @@ namespace Aiapps.Nfce
         public static void AcceptApplicationJson(this HttpRequestHeaders header)
         {
             header.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        
+        }        
     }
 }
