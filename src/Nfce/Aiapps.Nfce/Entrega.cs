@@ -12,4 +12,19 @@ namespace Aiapps.Nfce
         public string ProdutoId { get; set; }
         public DateTime Data { get; set; }
     }
+
+    public class EntregaPedido
+    {
+        public decimal Frete { get; set; }
+        public TipoFrete TipoFrete { get; set; } = TipoFrete.Gratuito;
+        public Transportador Transportador { get; set; } = new Transportador();
+        public Endereco Endereco { get; set; } = new Endereco();
+    }
+    public enum TipoFrete
+    {
+        Emitente = 0,
+        Destinatario = 1,
+        Terceiros = 2,
+        Gratuito = 9,
+    }
 }

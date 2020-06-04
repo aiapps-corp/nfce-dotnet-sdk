@@ -16,24 +16,9 @@ namespace Aiapps.Nfce
         public Equipamento PontoVenda { get; set; } = new Equipamento();
         public Item[] Itens { get; set; } = new Item[0];
         public Pagamento[] Pagamentos { get; set; } = new Pagamento[0];
-        public Entrega Entrega { get; set; } = new Entrega();
+        public EntregaPedido Entrega { get; set; } = new EntregaPedido();
         public decimal Desconto { get; set; }
         public string ContaCliente { get; set; }
         public string Referencia { get; set; }
-    }
-
-    public class Entrega
-    {
-        public decimal Frete { get; set; }
-        public TipoFrete TipoFrete { get; set; } = TipoFrete.Gratuito;
-        public Transportador Transportador { get; set; } = new Transportador();
-        public Endereco Endereco { get; set; } = new Endereco();
-    }
-    public enum TipoFrete
-    {
-        Emitente = 0,
-        Destinatario = 1,
-        Terceiros = 2,
-        Gratuito = 9,
     }
 }
