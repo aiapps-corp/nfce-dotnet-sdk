@@ -20,5 +20,6 @@ namespace Aiapps.Nfce
         public decimal Desconto { get; set; }
         public string ContaCliente { get; set; }
         public string Referencia { get; set; }
+        public string Situacao { get; set; }
     }
 }

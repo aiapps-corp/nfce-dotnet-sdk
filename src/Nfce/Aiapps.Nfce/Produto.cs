@@ -14,7 +14,7 @@ namespace Aiapps.Nfce
         public string Ncm { get; set; }
         public string Cfop { get; set; }
         public string Medida { get; set; }
-        public string Categoria { get; set; }
+        public Categoria Categoria { get; set; } = new Categoria();
 
         public decimal Valor { get; set; }
         public string UrlImagem { get; set; }
@@ -23,5 +23,10 @@ namespace Aiapps.Nfce
         public bool? TemControleEstoque { get; set; }
         public int? MinimoEstoque { get; set; }
         public int? MaximoEstoque { get; set; }
+    }
+
+    public class Categoria { 
+        public string Id { get; set; }
+        public string Nome { get; set; }
     }
 }
