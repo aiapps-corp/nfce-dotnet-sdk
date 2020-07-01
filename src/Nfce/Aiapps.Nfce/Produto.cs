@@ -28,5 +28,6 @@ namespace Aiapps.Nfce
     public class Categoria { 
         public string Id { get; set; }
         public string Nome { get; set; }
+        public string UrlImagem { get; set; }
     }
 }
