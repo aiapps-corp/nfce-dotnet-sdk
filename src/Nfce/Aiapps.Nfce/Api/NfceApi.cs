@@ -10,7 +10,7 @@ namespace Aiapps.Nfce.Api
 {
     public class NfceApi : TokenApi
     {
-        private string _route = "api/nfce";
+        protected string route = "api/nfce";
         private string _routeCancel = "api/nfce/cancelar";
         private string _routeDanfe = "api/nfce/baixardanfe";
 
@@ -102,7 +102,7 @@ namespace Aiapps.Nfce.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
 
                 var message = pedido.AsJson();
-                var response = await httpClient.PostAsync(_route, message);
+                var response = await httpClient.PostAsync(route, message);
                 return response;
             }
         }
