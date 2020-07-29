@@ -13,6 +13,7 @@ namespace Aiapps.Nfce
         public string Nome { get; set; }
         public string Ncm { get; set; }
         public string Cfop { get; set; }
+        public string Cest { get; set; }
         public string Medida { get; set; }
         public Categoria Categoria { get; set; } = new Categoria();
 
