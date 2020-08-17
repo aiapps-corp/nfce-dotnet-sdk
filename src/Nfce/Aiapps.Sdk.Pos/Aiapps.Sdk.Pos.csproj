@@ -1,7 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>pos-dotnet-sdk</PackageId>
+    <Authors>Aiapps</Authors>
+    <Company>Aiapps</Company>
+    <Description>POS SDK para registrar operações em equipamentos de venda (PDV)</Description>
+    <Copyright>aiapps</Copyright>
+    <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
