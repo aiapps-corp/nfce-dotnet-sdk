@@ -35,7 +35,7 @@ namespace Aiapps.Sdk.Pos.Api
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
                 retorno.Sucesso = false;
-                retorno.Mensagem = $"Falha ao entregar produto (Emissão de NFC-e) {responseContent}";
+                retorno.Mensagem = $"Falha ao registrar movimentação na POS {responseContent}";
             }
             return retorno;
         }
