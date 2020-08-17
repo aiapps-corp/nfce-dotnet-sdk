@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Aiapps.Nfce
+namespace Aiapps.Sdk
 {
     public static class Extensions
     {

@@ -1,4 +1,5 @@
 using Aiapps.Nfce.Api;
+using Aiapps.Sdk;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;

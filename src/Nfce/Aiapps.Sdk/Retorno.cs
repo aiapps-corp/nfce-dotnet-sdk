@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aiapps.Nfce
+namespace Aiapps.Sdk
 {
     public class Retorno
     {

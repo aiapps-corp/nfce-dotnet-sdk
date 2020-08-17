@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Nfce", "Aiapps.Nfce\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Nfce.Tests", "Aiapps.Nfce.Tests\Aiapps.Nfce.Tests.csproj", "{48582347-CC02-43D4-BE50-A4427E4BDF37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk", "Aiapps.Sdk\Aiapps.Sdk.csproj", "{8814C678-BE00-4F58-9628-14A332BC2B02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Pos", "Aiapps.Sdk.Pos\Aiapps.Sdk.Pos.csproj", "{61FFE5F8-3814-49D5-B358-CBB628B7B2E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8814C678-BE00-4F58-9628-14A332BC2B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8814C678-BE00-4F58-9628-14A332BC2B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8814C678-BE00-4F58-9628-14A332BC2B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8814C678-BE00-4F58-9628-14A332BC2B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61FFE5F8-3814-49D5-B358-CBB628B7B2E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61FFE5F8-3814-49D5-B358-CBB628B7B2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61FFE5F8-3814-49D5-B358-CBB628B7B2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61FFE5F8-3814-49D5-B358-CBB628B7B2E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
