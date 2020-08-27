@@ -9,5 +9,6 @@ namespace Aiapps.Nfce
         public string Tipo { get; set; }
         public decimal Valor { get; set; }
         public Cartao Cartao { get; set; }
+        public string Referencia { get; set; }
     }
 }
