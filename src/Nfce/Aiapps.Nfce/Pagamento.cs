@@ -6,6 +6,7 @@ namespace Aiapps.Nfce
 {
     public class Pagamento
     {
+        public DateTime DataVencimento { get; set; }
         public string Tipo { get; set; }
         public decimal Valor { get; set; }
         public Cartao Cartao { get; set; }
