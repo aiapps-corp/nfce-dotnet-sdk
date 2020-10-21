@@ -9,38 +9,38 @@ using System.Threading.Tasks;
 
 namespace Aiapps.Sdk.Pos.Api
 {
-    public class MovimentacaoApi : TokenApi
+    public class EquipamentoApi : TokenApi
     {
         private Credencial _credencial;
-        private string route = "api/pos/registrar";
+        private string route = "api/equipamentos";
 
-        public MovimentacaoApi(Credencial credencial)
+        public EquipamentoApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
         }
 
-        public async Task<Retorno> Registrar(Movimentacao movimentacao)
+        public async Task<Retorno> Registrar(Equipamento equipamento)
         {
             if (string.IsNullOrWhiteSpace(_credencial.Token))
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-            var response = await HttpRegistrarAsync(movimentacao);
+            var response = await HttpRegistrarAsync(equipamento);
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
-                response = await HttpRegistrarAsync(movimentacao);
+                response = await HttpRegistrarAsync(equipamento);
             }
             var retorno = new Retorno { Sucesso = true };
             if (response.IsSuccessStatusCode == false)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
                 retorno.Sucesso = false;
-                retorno.Mensagem = $"Falha ao registrar movimentação na POS {responseContent}";
+                retorno.Mensagem = $"Falha ao registrar equipamento {responseContent}";
             }
             return retorno;
         }
 
-        private async Task<HttpResponseMessage> HttpRegistrarAsync(Movimentacao movimentacao)
+        private async Task<HttpResponseMessage> HttpRegistrarAsync(Equipamento equipamento)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
@@ -48,7 +48,7 @@ namespace Aiapps.Sdk.Pos.Api
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
 
-                var message = movimentacao.AsJson();
+                var message = equipamento.AsJson();
                 var response = await httpClient.PostAsync(route, message);
                 return response;
             }
