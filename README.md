@@ -27,7 +27,7 @@ Criar uma conta de usuário no portal https://mobi.aiapps.com.br
                 Referencia = "6",
                 Itens = new Item[] {
                     new Item {
-                        Cfop = "5.102",
+                        Cfop = "5.405",
                         NCM = "2203.00.00",
                         ProdutoId = "1",
                         ProdutoNome = "Cerveja",
