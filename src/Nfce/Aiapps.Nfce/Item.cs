@@ -14,6 +14,7 @@ namespace Aiapps.Nfce
         public string NCM { get; set; }
         public string Cfop { get; set; }
         public bool EhTaxa { get; set; }
+        public string Uuid { get; set; }
         public CustomizacaoItem[] Customizacao { get; set; } = new CustomizacaoItem[0];
     }
 
