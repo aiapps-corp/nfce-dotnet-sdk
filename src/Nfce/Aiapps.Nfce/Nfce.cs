@@ -6,6 +6,8 @@ namespace Aiapps.Nfce
 {
     public class Nfce
     {
+        public string Cnpj { get; set; }
+        public string RazaoSocial { get; set; }
         public string Numero { get; set; }
         public string Serie { get; set; }
         public string ChaveAcesso { get; set; }
