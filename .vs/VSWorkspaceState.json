@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\Nfce"
   ],
-  "SelectedNode": "\\src",
+  "SelectedNode": "\\src\\Nfce\\Nfce.sln",
   "PreviewInSolutionExplorer": false
 }
