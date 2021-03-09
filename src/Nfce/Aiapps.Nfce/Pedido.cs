@@ -12,6 +12,7 @@ namespace Aiapps.Nfce
         public DateTime? DataHora { get; set; }
         public string Cfop { get; set; }
         public Cliente Cliente { get; set; } = new Cliente();
+        public Canal Canal { get; set; } = new Canal();
         public string TipoPagamento { get; set; }
         public Vendedor Vendedor { get; set; } = new Vendedor();
         public Equipamento PontoVenda { get; set; } = new Equipamento();
