@@ -20,6 +20,7 @@ namespace Aiapps.Nfce
         public Pagamento[] Pagamentos { get; set; } = new Pagamento[0];
         public EntregaPedido Entrega { get; set; } = new EntregaPedido();
         public IndicadorIntermediador? IndicadorIntermediador { get; set; }
+        public IntermediadorTransacao IntermediadorTransacao { get; set; } = new IntermediadorTransacao();
         public decimal Desconto { get; set; }
         public string ContaCliente { get; set; }
         public string Referencia { get; set; }
