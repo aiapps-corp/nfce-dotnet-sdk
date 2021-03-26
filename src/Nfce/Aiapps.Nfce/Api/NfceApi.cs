@@ -31,6 +31,7 @@ namespace Aiapps.Nfce.Api
         public async Task<Nfce> EmitirAsync(Pedido pedido)
         {
             var nfce = new Nfce();
+            var responseContent = string.Empty;
             try
             {
                 if (string.IsNullOrWhiteSpace(_credencial.Email) &&
@@ -47,7 +48,7 @@ namespace Aiapps.Nfce.Api
                     response = await HttpEmitirAsync(pedido);
                 }
 
-                var responseContent = await response.Content.ReadAsStringAsync();
+                responseContent = await response.Content.ReadAsStringAsync();
                 nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
                 if (response.StatusCode == HttpStatusCode.Conflict)
                 {
@@ -61,7 +62,7 @@ namespace Aiapps.Nfce.Api
             }
             catch (Exception ex)
             {
-                nfce.Erro = ex.Message;
+                nfce.Erro = $"{responseContent} {ex.Message}";
             }
             return nfce;
         }
