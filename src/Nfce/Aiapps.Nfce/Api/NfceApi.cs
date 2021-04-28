@@ -1,6 +1,7 @@
 ﻿using Aiapps.Sdk;
 using Aiapps.Sdk.Api;
 using Newtonsoft.Json;
+using Polly;
 using System;
 using System.Linq;
 using System.Net;
@@ -41,12 +42,16 @@ namespace Aiapps.Nfce.Api
                 if (string.IsNullOrWhiteSpace(_credencial.Token))
                     _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-                var response = await HttpEmitirAsync(pedido);
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
-                    response = await HttpEmitirAsync(pedido);
-                }
+                var response = await Policy
+                  .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+                  .RetryAsync(1, onRetryAsync: async (exception, retryCount)  =>
+                  {
+                      _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  })
+                  .ExecuteAsync(async () => {
+                      var r = await HttpEmitirAsync(pedido);
+                      return r;
+                  });
 
                 responseContent = await response.Content.ReadAsStringAsync();
                 nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
@@ -72,12 +77,16 @@ namespace Aiapps.Nfce.Api
             if (string.IsNullOrWhiteSpace(_credencial.Token))
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-            var response = await HttpCancelarAsync(chaveAcesso, motivo);
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
-                response = await HttpCancelarAsync(chaveAcesso, motivo);
-            }
+            var response = await Policy
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+              {
+                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+              })
+              .ExecuteAsync(async () => {
+                  var r = await HttpCancelarAsync(chaveAcesso, motivo);
+                  return r;
+              });
 
             return response.IsSuccessStatusCode;
         }
@@ -87,12 +96,16 @@ namespace Aiapps.Nfce.Api
             if (string.IsNullOrWhiteSpace(_credencial.Token))
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-            var response = await HttpDanfeAsync(chaveAcesso);
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
-                response = await HttpDanfeAsync(chaveAcesso);
-            }
+            var response = await Policy
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+              {
+                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+              })
+              .ExecuteAsync(async () => {
+                  var r = await HttpDanfeAsync(chaveAcesso);
+                  return r;
+              });
             return response;
         }
 

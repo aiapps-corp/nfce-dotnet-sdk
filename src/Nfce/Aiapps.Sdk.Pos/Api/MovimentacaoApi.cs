@@ -1,5 +1,6 @@
 ﻿using Aiapps.Sdk;
 using Aiapps.Sdk.Api;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -24,12 +25,16 @@ namespace Aiapps.Sdk.Pos.Api
             if (string.IsNullOrWhiteSpace(_credencial.Token))
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-            var response = await HttpRegistrarAsync(movimentacao);
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
-                response = await HttpRegistrarAsync(movimentacao);
-            }
+            var response = await Policy
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+              {
+                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+              })
+              .ExecuteAsync(async () => {
+                  var r = await HttpRegistrarAsync(movimentacao);
+                  return r;
+              });
             var retorno = new Retorno { Sucesso = true };
             if (response.IsSuccessStatusCode == false)
             {
