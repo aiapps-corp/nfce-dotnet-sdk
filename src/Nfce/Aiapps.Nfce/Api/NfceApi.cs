@@ -16,6 +16,7 @@ namespace Aiapps.Nfce.Api
         protected string route = "api/nfce";
         private string _routeCancel = "api/nfce/cancelar";
         private string _routeDanfe = "api/nfce/baixardanfe";
+        private int _maxRetry = 3;
 
         private Credencial _credencial;
 
@@ -42,16 +43,25 @@ namespace Aiapps.Nfce.Api
                 if (string.IsNullOrWhiteSpace(_credencial.Token))
                     _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
+
                 var response = await Policy
-                  .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
-                  .RetryAsync(1, onRetryAsync: async (exception, retryCount)  =>
+                  .Handle<Exception>()
+                  .RetryAsync(_maxRetry, async (exception, retryCount) =>
                   {
-                      _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                      await Task.Delay(300 * retryCount).ConfigureAwait(false);
                   })
                   .ExecuteAsync(async () => {
-                      var r = await HttpEmitirAsync(pedido);
-                      return r;
-                  });
+                      return await Policy
+                        .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+                        .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+                        {
+                            _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                        })
+                        .ExecuteAsync(async () => {
+                            var r = await HttpEmitirAsync(pedido);
+                            return r;
+                        }).ConfigureAwait(false);
+                  }).ConfigureAwait(false);
 
                 responseContent = await response.Content.ReadAsStringAsync();
                 nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
@@ -78,15 +88,23 @@ namespace Aiapps.Nfce.Api
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
             var response = await Policy
-              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
-              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+              .Handle<Exception>()
+              .RetryAsync(_maxRetry, async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  await Task.Delay(300 * retryCount).ConfigureAwait(false);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpCancelarAsync(chaveAcesso, motivo);
-                  return r;
-              });
+                  return await Policy
+                    .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+                    .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+                    {
+                        _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                    })
+                    .ExecuteAsync(async () => {
+                        var r = await HttpCancelarAsync(chaveAcesso, motivo);
+                        return r;
+                    }).ConfigureAwait(false);
+              }).ConfigureAwait(false);
 
             return response.IsSuccessStatusCode;
         }
