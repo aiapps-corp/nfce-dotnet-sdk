@@ -11,7 +11,7 @@ namespace Aiapps.Sdk.Api
     public abstract class TokenApi
     {
 #if DEBUG
-        protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
+        protected string BaseHttpsAddress { get; set; } = "https://localhost:44370";
 #else
         protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
 #endif
@@ -34,6 +34,20 @@ namespace Aiapps.Sdk.Api
                 var token = jsonObj.access_token.ToString();
                 var expiryDate = DateTime.UtcNow.AddSeconds(expires_in);
                 return token;
+            }
+        }
+
+        protected async Task<HttpResponseMessage> HttpPostAsync<T>(T value, string route, string token)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+
+                var message = value.AsJson();
+                var response = await httpClient.PostAsync(route, message);
+                return response;
             }
         }
     }
