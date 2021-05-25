@@ -11,7 +11,7 @@ namespace Aiapps.Sdk.Api
     public abstract class TokenApi
     {
 #if DEBUG
-        protected string BaseHttpsAddress { get; set; } = "https://localhost:44370";
+        protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
 #else
         protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
 #endif
