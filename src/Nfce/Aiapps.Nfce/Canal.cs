@@ -8,5 +8,6 @@ namespace Aiapps.Nfce
     {
         public string Codigo { get; set; }
         public string Nome { get; set; }
+        public string IconeUrl { get; set; }
     }
 }
