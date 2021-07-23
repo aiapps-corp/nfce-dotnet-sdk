@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Nfce", "Aiapps.Nfce\Aiapps.Nfce.csproj", "{A0CE30E8-CE94-4C06-ACDA-C8767DDB40EC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Nfce.Tests", "Aiapps.Nfce.Tests\Aiapps.Nfce.Tests.csproj", "{48582347-CC02-43D4-BE50-A4427E4BDF37}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk", "Aiapps.Sdk\Aiapps.Sdk.csproj", "{8814C678-BE00-4F58-9628-14A332BC2B02}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Pos", "Aiapps.Sdk.Pos\Aiapps.Sdk.Pos.csproj", "{61FFE5F8-3814-49D5-B358-CBB628B7B2E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Licensing", "Aiapps.Sdk.Licensing\Aiapps.Sdk.Licensing.csproj", "{635568CC-F016-4BB1-8053-E57BF8732313}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Licensing.Tests", "Aiapps.Sdk.Licensing.Tests\Aiapps.Sdk.Licensing.Tests.csproj", "{24B28C15-FE87-4B43-BD33-313B26D9BD33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Licensing.Tests", "Aiapps.Sdk.Licensing.Tests\Aiapps.Sdk.Licensing.Tests.csproj", "{24B28C15-FE87-4B43-BD33-313B26D9BD33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Nfce.Tests", "Aiapps.Sdk.Nfce.Tests\Aiapps.Sdk.Nfce.Tests.csproj", "{38AFA520-02AD-46FC-A313-6580E533EDFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Nfce", "Aiapps.Sdk.Nfce\Aiapps.Sdk.Nfce.csproj", "{7CB8F8F4-DEC7-44A6-9054-3C469BD61F1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A0CE30E8-CE94-4C06-ACDA-C8767DDB40EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0CE30E8-CE94-4C06-ACDA-C8767DDB40EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0CE30E8-CE94-4C06-ACDA-C8767DDB40EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0CE30E8-CE94-4C06-ACDA-C8767DDB40EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48582347-CC02-43D4-BE50-A4427E4BDF37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8814C678-BE00-4F58-9628-14A332BC2B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8814C678-BE00-4F58-9628-14A332BC2B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8814C678-BE00-4F58-9628-14A332BC2B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,9 +39,21 @@ Global
 		{24B28C15-FE87-4B43-BD33-313B26D9BD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24B28C15-FE87-4B43-BD33-313B26D9BD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24B28C15-FE87-4B43-BD33-313B26D9BD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38AFA520-02AD-46FC-A313-6580E533EDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38AFA520-02AD-46FC-A313-6580E533EDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38AFA520-02AD-46FC-A313-6580E533EDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38AFA520-02AD-46FC-A313-6580E533EDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB8F8F4-DEC7-44A6-9054-3C469BD61F1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB8F8F4-DEC7-44A6-9054-3C469BD61F1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB8F8F4-DEC7-44A6-9054-3C469BD61F1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB8F8F4-DEC7-44A6-9054-3C469BD61F1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{24B28C15-FE87-4B43-BD33-313B26D9BD33} = {E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}
+		{38AFA520-02AD-46FC-A313-6580E533EDFD} = {E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63D08ED7-A502-4028-9E81-CCF2E1AED77F}
