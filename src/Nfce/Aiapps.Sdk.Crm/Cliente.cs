@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Aiapps.Nfce
+namespace Aiapps.Sdk.Crm
 {
     public class Cliente
     {

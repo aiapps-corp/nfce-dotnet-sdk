@@ -1,4 +1,5 @@
 ﻿using Aiapps.Sdk;
+using Aiapps.Sdk.Crm;
 using System;
 using System.Collections.Generic;
 using System.Text;

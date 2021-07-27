@@ -41,4 +41,5 @@ namespace Aiapps.Nfce
         /// </summary>
         public string Referencia { get; set; }
     }
+
 }
