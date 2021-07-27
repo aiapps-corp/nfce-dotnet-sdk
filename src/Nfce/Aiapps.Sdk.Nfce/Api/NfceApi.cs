@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Aiapps.Nfce.Api
+namespace Aiapps.Sdk.Nfce.Api
 {
     public class NfceApi : TokenApi
     {

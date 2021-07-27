@@ -1,11 +1,11 @@
-using Aiapps.Nfce.Api;
+using Aiapps.Sdk.Nfce.Api;
 using Aiapps.Sdk;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiapps.Nfce.Tests
+namespace Aiapps.Sdk.Nfce.Tests
 {
     [TestClass]
     public class NfceApiTest

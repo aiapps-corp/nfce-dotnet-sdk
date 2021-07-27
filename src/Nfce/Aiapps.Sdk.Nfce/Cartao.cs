@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aiapps.Nfce
+namespace Aiapps.Sdk.Nfce
 {
     public class Cartao
     {
