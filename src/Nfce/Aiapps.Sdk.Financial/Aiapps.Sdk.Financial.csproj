@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Aiapps.Sdk.Financial</PackageId>
-    <Product>Aiapps.Financial.Sdk</Product>
+    <Product>Aiapps.Sdk.Financial</Product>
     <Authors>Aiapps</Authors>
     <Company>Aiapps</Company>
     <Description>SDK para de integração com o módulo financeiro do Mobi</Description>
