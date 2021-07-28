@@ -19,6 +19,7 @@ namespace Aiapps.Sdk.Nfce
         public string Url { get; set; }
         public Sefaz Sefaz { get; set; } = new Sefaz();
 
+        public string Referencia { get; set; }
         public string Erro { get; set; }
     }
 

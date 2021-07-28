@@ -12,4 +12,12 @@ namespace Aiapps.Sdk
         public string Complemento { get; set; }
         public string Bairro { get; set; }
     }
+    public class Address
+    {
+        public string PostalCode { get; set; }
+        public string Street { get; set; }
+        public string Number { get; set; }
+        public string Complement { get; set; }
+        public string Neighborhood { get; set; }
+    }
 }
