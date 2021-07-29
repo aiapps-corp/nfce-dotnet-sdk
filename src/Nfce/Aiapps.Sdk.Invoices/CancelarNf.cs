@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aiapps.Sdk.Nfce
+namespace Aiapps.Sdk.Invoices
 {
     public class CancelarNf
     {

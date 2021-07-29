@@ -1,14 +1,11 @@
-﻿using Aiapps.Sdk;
-using Aiapps.Sdk.Api;
+﻿using Aiapps.Sdk.Api;
 using Polly;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Aiapps.Sdk.Nfce.Api
+namespace Aiapps.Sdk.Orders.Api
 {
     public class ProdutoApi : TokenApi
     {

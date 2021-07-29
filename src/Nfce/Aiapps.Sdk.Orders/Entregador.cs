@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aiapps.Sdk.Nfce
+namespace Aiapps.Sdk.Orders
 {
-    public class Vendedor : Operador
+    public class Entregador : Operador
     {
     }
 }

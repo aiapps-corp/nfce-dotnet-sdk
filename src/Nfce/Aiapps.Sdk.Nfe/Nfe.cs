@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aiapps.Sdk.Nfce
+namespace Aiapps.Sdk.Nfe
 {
-    public class Nfce : Nf
+    public class Nfe : Aiapps.Sdk.Invoices.Nf
     {
     }
 

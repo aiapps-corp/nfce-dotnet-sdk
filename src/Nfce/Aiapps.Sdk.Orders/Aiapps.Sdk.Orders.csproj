@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Aiapps.Sdk.Orders</PackageId>
+    <Product>Aiapps.Sdk.Orders</Product>
+    <Authors>Aiapps</Authors>
+    <Company>Aiapps</Company>
+    <Description>SDK para de integração com o módulo de pedidos do Mobi</Description>
+    <Copyright>aiapps</Copyright>
+    <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Polly" Version="7.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aiapps.Sdk.Crm\Aiapps.Sdk.Crm.csproj" />
+    <ProjectReference Include="..\Aiapps.Sdk\Aiapps.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>

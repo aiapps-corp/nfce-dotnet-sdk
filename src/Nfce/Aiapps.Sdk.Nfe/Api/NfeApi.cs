@@ -7,18 +7,18 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aiapps.Sdk.Nfce.Api
+namespace Aiapps.Sdk.Nfe.Api
 {
-    public class NfceApi : TokenApi
+    public class NfeApi : TokenApi
     {
-        protected string route = "api/nfce";
-        private string _routeCancel = "api/nfce/cancelar";
-        private string _routeDanfe = "api/nfce/baixardanfe";
+        protected string route = "api/nfe";
+        private string _routeCancel = "api/nfe/cancelar";
+        private string _routeDanfe = "api/nfe/baixardanfe";
         private int _maxRetry = 3;
 
         private Credencial _credencial;
 
-        public NfceApi(Credencial credencial)
+        public NfeApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
         }
@@ -28,9 +28,9 @@ namespace Aiapps.Sdk.Nfce.Api
         /// </summary>
         /// <param name="pedido"></param>
         /// <returns></returns>
-        public async Task<Nfce> EmitirAsync(Pedido pedido)
+        public async Task<Nfe> EmitirAsync(Pedido pedido)
         {
-            var nfce = new Nfce();
+            var nfe = new Nfe();
             var responseContent = string.Empty;
             try
             {
@@ -62,22 +62,22 @@ namespace Aiapps.Sdk.Nfce.Api
                   }).ConfigureAwait(false);
 
                 responseContent = await response.Content.ReadAsStringAsync();
-                nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
+                nfe = JsonConvert.DeserializeObject<Nfe>(responseContent);
                 if (response.StatusCode == HttpStatusCode.Conflict)
                 {
-                    nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
+                    nfe.Erro = $"Pedido {pedido.Referencia} já foi enviado";
                 }
-                if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
+                if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfe.Sefaz.Motivo))
                 {
                     var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                    nfce.Erro = $"{obj?.message}";
+                    nfe.Erro = $"{obj?.message}";
                 }
             }
             catch (Exception ex)
             {
-                nfce.Erro = $"{responseContent} {ex.Message}";
+                nfe.Erro = $"{responseContent} {ex.Message}";
             }
-            return nfce;
+            return nfe;
         }
 
         public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)

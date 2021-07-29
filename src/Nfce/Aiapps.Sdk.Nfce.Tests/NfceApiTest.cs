@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
+using Aiapps.Sdk.Orders;
 
 namespace Aiapps.Sdk.Nfce.Tests
 {
