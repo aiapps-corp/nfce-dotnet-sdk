@@ -26,6 +26,7 @@ namespace Aiapps.Sdk.Orders
         public string ContaCliente { get; set; }
         public string Referencia { get; set; }
         public string Situacao { get; set; }
+        public bool Assincrono { get; set; }
     }
 
     /// <summary>
