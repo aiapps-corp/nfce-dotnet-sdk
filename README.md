@@ -6,6 +6,8 @@ Biblioteca em C# para geração de NFC-e usando api mobi.
 
 Criar uma conta de usuário no portal https://mobi.aiapps.com.br
 
+- API Swagger https://api.aiapps.com.br
+
 - Com essa conta já é possível usar a API.
 
 - Para emitir com sucesso uma NFC-e é necessário completar as informações da empresa e configurar o certificado digital: https://www.youtube.com/watch?v=6ZxWLVKValE
