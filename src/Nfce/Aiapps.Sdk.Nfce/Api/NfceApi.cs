@@ -41,7 +41,6 @@ namespace Aiapps.Sdk.Nfce.Api
                 if (string.IsNullOrWhiteSpace(_credencial.Token))
                     _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
 
-
                 var response = await Policy
                   .Handle<Exception>()
                   .RetryAsync(_maxRetry, async (exception, retryCount) =>
@@ -62,12 +61,19 @@ namespace Aiapps.Sdk.Nfce.Api
                   }).ConfigureAwait(false);
 
                 responseContent = await response.Content.ReadAsStringAsync();
-                nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
-                if (response.StatusCode == HttpStatusCode.Conflict)
+                if (response.IsSuccessStatusCode)
+                {
+                    nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
+                }
+                else if (response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    nfce.Erro = "Módulo bloqueado";
+                }
+                else if (response.StatusCode == HttpStatusCode.Conflict)
                 {
                     nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
                 }
-                if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
+                else if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
                 {
                     var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
                     nfce.Erro = $"{obj?.message}";
