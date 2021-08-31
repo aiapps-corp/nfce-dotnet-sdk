@@ -11,6 +11,11 @@ namespace Aiapps.Sdk.Api
     public abstract class TokenApi
     {
 #if DEBUG
+        protected string BaseAuthHttpsAddress { get; set; } = "https://auth.aiapps.com.br";
+#else
+        protected string BaseAuthHttpsAddress { get; set; } = "https://auth.aiapps.com.br";
+#endif
+#if DEBUG
         protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
 #else
         protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
@@ -20,7 +25,7 @@ namespace Aiapps.Sdk.Api
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
-                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.BaseAddress = new Uri(BaseAuthHttpsAddress);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
                 var content = new StringContent($"grant_type=password&username={username}&password={password}");
                 var response = await httpClient.PostAsync("token", content);
