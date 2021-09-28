@@ -63,18 +63,21 @@ namespace Aiapps.Sdk.Nfce.Api
                 responseContent = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
+                    nfce = TryParse(nfce, responseContent);
                 }
                 else if (response.StatusCode == HttpStatusCode.Forbidden)
                 {
+                    nfce = TryParse(nfce, responseContent);
                     nfce.Erro = "Módulo bloqueado";
                 }
                 else if (response.StatusCode == HttpStatusCode.Conflict)
                 {
+                    nfce = TryParse(nfce, responseContent);
                     nfce.Erro = $"Pedido {pedido.Referencia} já foi enviado";
                 }
-                else if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfce.Sefaz.Motivo))
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
+                    nfce = TryParse(nfce, responseContent);
                     var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
                     nfce.Erro = $"{obj?.message}";
                 }
@@ -83,6 +86,17 @@ namespace Aiapps.Sdk.Nfce.Api
             {
                 nfce.Erro = $"{responseContent} {ex.Message}";
             }
+            return nfce;
+        }
+
+        private static Nfce TryParse(Nfce nfce, string responseContent)
+        {
+            try
+            {
+                nfce = JsonConvert.DeserializeObject<Nfce>(responseContent);
+            }
+            catch { }
+
             return nfce;
         }
 

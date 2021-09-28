@@ -63,18 +63,21 @@ namespace Aiapps.Sdk.Nfe.Api
                 responseContent = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    nfe = JsonConvert.DeserializeObject<Nfe>(responseContent);
+                    nfe = TryParse(nfe, responseContent);
                 }
                 else if (response.StatusCode == HttpStatusCode.Forbidden)
                 {
+                    nfe = TryParse(nfe, responseContent);
                     nfe.Erro = "Módulo bloqueado";
                 }
                 else if (response.StatusCode == HttpStatusCode.Conflict)
                 {
+                    nfe = TryParse(nfe, responseContent);
                     nfe.Erro = $"Pedido {pedido.Referencia} já foi enviado";
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest && string.IsNullOrWhiteSpace(nfe.Sefaz.Motivo))
                 {
+                    nfe = TryParse(nfe, responseContent);
                     var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
                     nfe.Erro = $"{obj?.message}";
                 }
@@ -84,6 +87,17 @@ namespace Aiapps.Sdk.Nfe.Api
                 nfe.Erro = $"{responseContent} {ex.Message}";
             }
             return nfe;
+        }
+
+        private static Nfe TryParse(Nfe nfce, string responseContent)
+        {
+            try
+            {
+                nfce = JsonConvert.DeserializeObject<Nfe>(responseContent);
+            }
+            catch { }
+
+            return nfce;
         }
 
         public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)
