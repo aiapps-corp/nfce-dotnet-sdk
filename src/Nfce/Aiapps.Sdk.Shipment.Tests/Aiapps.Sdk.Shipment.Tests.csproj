@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aiapps.Sdk.Nfe\Aiapps.Sdk.Shipment.csproj" />
+    <ProjectReference Include="..\Aiapps.Sdk.Shipment\Aiapps.Sdk.Shipment.csproj" />
   </ItemGroup>
 
 </Project>
