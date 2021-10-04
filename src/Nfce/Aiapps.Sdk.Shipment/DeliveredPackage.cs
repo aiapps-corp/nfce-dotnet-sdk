@@ -7,8 +7,8 @@ namespace Aiapps.Sdk.Shipment
 {
     public class DeliveredPackage
     {
-        public Deliveryman DeliveredBy { get; set; }
-        public Device DeliveryValidator { get; set; }
+        public Deliveryman DeliveredBy { get; set; } = new Deliveryman();
+        public Device DeliveryValidator { get; set; } = new Device();
         public string OrderReference { get; set; }
         public string TrackingNumber { get; set; }
         public string ProductReference { get; set; }

@@ -10,7 +10,7 @@ namespace Aiapps.Sdk.Shipment.Api
 {
     public class DeliverPackageApi : TokenApi
     {
-        protected string ShipmentBaseHttpsAddress { get; set; } = "https://inventory.aiapps.com.br";
+        protected string ShipmentBaseHttpsAddress { get; set; } = "https://inventory-api.aiapps.com.br";
         private string _routeDeliver = "api/shipment/deliver";
 
         private Credencial _credencial;
