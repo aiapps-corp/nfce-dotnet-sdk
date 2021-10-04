@@ -27,13 +27,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Hooks", "Aiapps.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Hooks.Tests", "Aiapps.Sdk.Hooks.Tests\Aiapps.Sdk.Hooks.Tests.csproj", "{A1CE3A76-B71E-45C1-9114-295F7B7E2058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Invoices", "Aiapps.Sdk.Invoices\Aiapps.Sdk.Invoices.csproj", "{BA35A003-1051-4FD9-97E5-7B4A20C22560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Invoices", "Aiapps.Sdk.Invoices\Aiapps.Sdk.Invoices.csproj", "{BA35A003-1051-4FD9-97E5-7B4A20C22560}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Orders", "Aiapps.Sdk.Orders\Aiapps.Sdk.Orders.csproj", "{8051DA0F-7F88-4C06-B2DC-DBC16AC7B4F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Orders", "Aiapps.Sdk.Orders\Aiapps.Sdk.Orders.csproj", "{8051DA0F-7F88-4C06-B2DC-DBC16AC7B4F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Nfe", "Aiapps.Sdk.Nfe\Aiapps.Sdk.Nfe.csproj", "{0C9C5CFC-B833-4FF0-86BA-A9223E74066F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Nfe", "Aiapps.Sdk.Nfe\Aiapps.Sdk.Nfe.csproj", "{0C9C5CFC-B833-4FF0-86BA-A9223E74066F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Nfe.Tests", "Aiapps.Sdk.Nfe.Tests\Aiapps.Sdk.Nfe.Tests.csproj", "{29192D2E-3E74-4870-AD27-A0FBE2429B43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiapps.Sdk.Nfe.Tests", "Aiapps.Sdk.Nfe.Tests\Aiapps.Sdk.Nfe.Tests.csproj", "{29192D2E-3E74-4870-AD27-A0FBE2429B43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Shipment", "Aiapps.Sdk.Shipment\Aiapps.Sdk.Shipment.csproj", "{DD373082-19B8-41F3-87A9-B539AF83E100}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiapps.Sdk.Shipment.Tests", "Aiapps.Sdk.Shipment.Tests\Aiapps.Sdk.Shipment.Tests.csproj", "{9925292F-BF32-434C-923B-0AFCA87516F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +105,14 @@ Global
 		{29192D2E-3E74-4870-AD27-A0FBE2429B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29192D2E-3E74-4870-AD27-A0FBE2429B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29192D2E-3E74-4870-AD27-A0FBE2429B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD373082-19B8-41F3-87A9-B539AF83E100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD373082-19B8-41F3-87A9-B539AF83E100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD373082-19B8-41F3-87A9-B539AF83E100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD373082-19B8-41F3-87A9-B539AF83E100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9925292F-BF32-434C-923B-0AFCA87516F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9925292F-BF32-434C-923B-0AFCA87516F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9925292F-BF32-434C-923B-0AFCA87516F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9925292F-BF32-434C-923B-0AFCA87516F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +123,7 @@ Global
 		{7ED7271F-B41C-4F7F-94CD-0F7A012A9C61} = {E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}
 		{A1CE3A76-B71E-45C1-9114-295F7B7E2058} = {E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}
 		{29192D2E-3E74-4870-AD27-A0FBE2429B43} = {E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}
+		{9925292F-BF32-434C-923B-0AFCA87516F0} = {E5A9B9DA-1F04-4B4E-95A9-F843B03879A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63D08ED7-A502-4028-9E81-CCF2E1AED77F}
