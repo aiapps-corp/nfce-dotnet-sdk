@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Aiapps.Sdk
 {
+    [Obsolete]
     public class Endereco
     {
         public string Cep { get; set; }

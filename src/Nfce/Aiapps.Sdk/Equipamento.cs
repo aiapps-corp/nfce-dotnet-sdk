@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Aiapps.Sdk
 {
+    [Obsolete("Use Device")]
     public class Equipamento
     {
         public string Codigo { get; set; }
