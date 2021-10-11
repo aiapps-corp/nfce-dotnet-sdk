@@ -12,6 +12,8 @@ namespace Aiapps.Sdk.Shipment
         public string OrderReference { get; set; }
         public string TrackingNumber { get; set; }
         public string ProductReference { get; set; }
+        public decimal QuantityDelivered { get; set; } = 1;
+        public decimal? UnitValue { get; set; }
         public DateTime DeliveredAt { get; set; }
     }
 }
