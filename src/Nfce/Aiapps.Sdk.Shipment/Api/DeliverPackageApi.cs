@@ -11,6 +11,7 @@ namespace Aiapps.Sdk.Shipment.Api
     public class DeliverPackageApi : TokenApi
     {
         protected string ShipmentBaseHttpsAddress { get; set; } = "https://inventory-api.aiapps.com.br";
+        private string _routeReserve = "api/shipment/reserve";
         private string _routeDeliver = "api/shipment/deliver";
         private string _routeReturn = "api/shipment/return";
         private string _routeChangeTrackingNumber = "api/shipment/changeTrackingNumber";
@@ -20,6 +21,26 @@ namespace Aiapps.Sdk.Shipment.Api
         public DeliverPackageApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
+        }
+
+        public async Task<ReserveResponse> Reserve(ReservedPackage package)
+        {
+            if (string.IsNullOrWhiteSpace(_credencial.Token))
+                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+
+            var response = await Policy
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+              {
+                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+              })
+              .ExecuteAsync(async () => {
+                  var r = await HttpPostAsync(package, _routeReserve);
+                  return r;
+              });
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseObject = JsonConvert.DeserializeObject<ReserveResponse>(responseContent);
+            return responseObject;
         }
 
         public async Task<DeliverResponse> Deliver(DeliveredPackage deliveredPackage)
@@ -42,7 +63,7 @@ namespace Aiapps.Sdk.Shipment.Api
             return responseObject;
         }
 
-        public async Task<DeliverResponse> Return(DeliveredPackage deliveredPackage)
+        public async Task<ReturnedResponse> Return(ReturnedPackage deliveredPackage)
         {
             if (string.IsNullOrWhiteSpace(_credencial.Token))
                 _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
@@ -58,7 +79,7 @@ namespace Aiapps.Sdk.Shipment.Api
                   return r;
               });
             var responseContent = await response.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<DeliverResponse>(responseContent);
+            var responseObject = JsonConvert.DeserializeObject<ReturnedResponse>(responseContent);
             return responseObject;
         }
 

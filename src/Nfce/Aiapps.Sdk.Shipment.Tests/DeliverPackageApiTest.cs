@@ -14,7 +14,7 @@ namespace Aiapps.Sdk.Shipment.Tests
             var deliverPackageApi = new DeliverPackageApi(ValidCredencial);
             var response = await deliverPackageApi.Deliver(new DeliveredPackage { 
                 DeliveredAt = DateTime.UtcNow,
-                DeliveredBy = new Deliveryman { },
+                DeliveredBy = new Operator { },
                 DeliveryValidator = new Device { Name = "VALIDATOR-01" },
                 OrderReference = "30ad0ba9-ac93-4640-8bae-b4bf363bf2ab",
                 ProductReference = "b87935a0e3da41f28808af0210e22712",
@@ -29,7 +29,7 @@ namespace Aiapps.Sdk.Shipment.Tests
             {
                 Reference = "30ad0ba9-ac93-4640-8bae-b4bf363bf2ab",
                 DeliveredAt = DateTime.UtcNow,
-                DeliveredBy = new Deliveryman { },
+                DeliveredBy = new Operator { },
                 DeliveryValidator = new Device { Name = "VALIDATOR-01" },
                 ProductReference = "b87935a0e3da41f28808af0210e22712",
                 TrackingNumber = "30ad0ba9-ac93-4640-8bae-b4bf363bf2ab"

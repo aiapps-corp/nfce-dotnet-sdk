@@ -10,7 +10,7 @@
     <Copyright>aiapps</Copyright>
     <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
-    <Version>1.0.7</Version>
+    <Version>1.0.9</Version>
   </PropertyGroup>
 
   <ItemGroup>
