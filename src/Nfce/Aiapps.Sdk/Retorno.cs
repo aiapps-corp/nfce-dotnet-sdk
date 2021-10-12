@@ -10,4 +10,11 @@ namespace Aiapps.Sdk
 
         public string Mensagem { get; set; }
     }
+
+    public class Response
+    {
+        public bool IsSuccessStatus { get; set; }
+        public string Status { get; set; }
+        public string StatusMessage { get; set; }
+    }
 }
