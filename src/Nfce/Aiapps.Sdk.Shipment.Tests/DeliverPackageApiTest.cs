@@ -14,7 +14,7 @@ namespace Aiapps.Sdk.Shipment.Tests
             var deliverPackageApi = new DeliverPackageApi(ValidCredencial);
             var response = await deliverPackageApi.Deliver(new DeliveredPackage { 
                 DeliveredAt = DateTime.UtcNow,
-                DeliveredBy = new Operator { },
+                DeliveredBy = new Operator { Name = "Paulo" },
                 DeliveryValidator = new Device { Name = "VALIDATOR-01" },
                 OrderReference = "30ad0ba9-ac93-4640-8bae-b4bf363bf2ab",
                 ProductReference = "b87935a0e3da41f28808af0210e22712",
@@ -39,8 +39,8 @@ namespace Aiapps.Sdk.Shipment.Tests
 
         private static Credencial ValidCredencial = new Credencial
         {
-            Email = "integracao-2@meep.cloud",
-            Senha = "123456"
+            Email = "",
+            Senha = ""
         };
     }
 }
