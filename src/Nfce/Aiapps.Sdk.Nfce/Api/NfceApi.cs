@@ -21,6 +21,7 @@ namespace Aiapps.Sdk.Nfce.Api
         public NfceApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
+            BaseHttpsAddress = "https://invoices-api.aiapps.com.br";
         }
 
         /// <summary>

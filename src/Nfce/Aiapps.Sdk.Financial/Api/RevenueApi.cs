@@ -15,8 +15,7 @@ namespace Aiapps.Sdk.Financial.Api
 
         public RevenueApi(Credencial credencial)
         {
-            BaseHttpsAddress = "https://aiapps-financial-api.azurewebsites.net";
-            //BaseHttpsAddress = "https://localhost:49153";
+            BaseHttpsAddress = "https://financial-api.aiapps.com.br";
             _credencial = credencial ?? new Credencial();
         }
 
