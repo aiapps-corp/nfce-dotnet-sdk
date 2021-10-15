@@ -15,6 +15,7 @@ namespace Aiapps.Sdk.Hooks.Api
         public HookApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
+            BaseHttpsAddress = "http://hooks-api.aiapps.com.br";
         }
 
         public async Task<Hook> Post(Hook value)

@@ -15,6 +15,7 @@ namespace Aiapps.Sdk.Licensing.Api
         public LicenseApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
+            BaseHttpsAddress = "http://licensing.aiapps.com.br";
         }
 
         public async Task Connect(ConnectLicenseRequest value)
