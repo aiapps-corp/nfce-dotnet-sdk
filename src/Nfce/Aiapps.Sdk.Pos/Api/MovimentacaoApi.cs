@@ -18,6 +18,7 @@ namespace Aiapps.Sdk.Pos.Api
         public MovimentacaoApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
+            BaseHttpsAddress = "https://sales-api.aiapps.com.br";
         }
 
         public async Task<Retorno> Registrar(Movimentacao movimentacao)

@@ -16,6 +16,7 @@ namespace Aiapps.Sdk.Orders.Api
         public ProdutoApi(Credencial credencial)
         {
             _credencial = credencial ?? new Credencial();
+            BaseHttpsAddress = "https://production-api.aiapps.com.br";
         }
 
         public async Task<Retorno> CadastrarOuAtualizarAsync(Produto produto)
