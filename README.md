@@ -6,7 +6,8 @@ Biblioteca em C# para geração de NFC-e usando api mobi.
 
 Criar uma conta de usuário no portal https://mobi.aiapps.com.br
 
-- API Swagger https://api.aiapps.com.br
+- API Swagger https://invoices-api.aiapps.com.br/swagger (Emissão de NF-e e NFC-e)  
+- API Swagger https://production-api.aiapps.com.br/swagger (Produtos)
 
 - Com essa conta já é possível usar a API.
 
