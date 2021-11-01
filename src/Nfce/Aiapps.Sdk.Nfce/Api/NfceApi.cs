@@ -153,6 +153,7 @@ namespace Aiapps.Sdk.Nfce.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var message = pedido.AsJson();
                 var response = await httpClient.PostAsync(route, message);
@@ -167,6 +168,7 @@ namespace Aiapps.Sdk.Nfce.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo }.AsJson());
                 return response;
@@ -180,6 +182,7 @@ namespace Aiapps.Sdk.Nfce.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var response = await httpClient.GetAsync($"{_routeDanfe}?chaveAcesso={chaveAcesso}");
                 return response;

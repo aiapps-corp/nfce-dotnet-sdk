@@ -10,7 +10,7 @@
     <Description>SDK para conectar, ativar e cancelar assinaturas de integração com o Mobi</Description>
     <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   
 </PropertyGroup>
 

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Aiapps.Sdk.Orders;
+using System.IO;
 
 namespace Aiapps.Sdk.Nfce.Tests
 {
@@ -57,11 +58,14 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task EmitirAsync_Credencial_Valida_Test()
         {
-            var nfceApi = new NfceApi(ValidCredencial);
-            var response = await nfceApi.EmitirAsync(new Pedido
+            try
             {
-                Referencia = Guid.NewGuid().ToString(),
-                Itens = new Item[] {
+                var nfceApi = new NfceApi(ValidCredencial);
+                nfceApi.Timeout = TimeSpan.FromSeconds(5);
+                var response = await nfceApi.EmitirAsync(new Pedido
+                {
+                    Referencia = Guid.NewGuid().ToString(),
+                    Itens = new Item[] {
                     new Item {
                         Cfop = "5.102",
                         NCM = "2203.00.00",
@@ -71,15 +75,19 @@ namespace Aiapps.Sdk.Nfce.Tests
                         ValorUnitario = 5m
                     }
                 },
-                Pagamentos = new Pagamento[] {
+                    Pagamentos = new Pagamento[] {
                     new Pagamento {
                         Tipo = "01",
                         Valor = 5
                     }
                 },
-                Desconto = 0,
-            });
-            Assert.IsNotNull(response.ChaveAcesso);
+                    Desconto = 0,
+                });
+                Assert.IsNotNull(response.ChaveAcesso);
+            }
+            catch (Exception ex) {
+                var text = ex.Message;
+            }
         }
 
         [TestMethod]
@@ -101,7 +109,9 @@ namespace Aiapps.Sdk.Nfce.Tests
         public async Task DanfeAsyncNaoAutorizado_Test()
         {
             var nfceApi = new NfceApi(ValidCredencial);
-            var response = await nfceApi.DanfeAsync("31200400000000000000650010000000051842021836");
+            var response = await nfceApi.DanfeAsync("21211004228479000179650100000656491004181672");
+            var content = await response.Content.ReadAsByteArrayAsync();
+            File.WriteAllBytes("danfe.pdf", content);
             Assert.AreEqual("NF-e 1-5 não está autorizada", response.ReasonPhrase);
         }
 

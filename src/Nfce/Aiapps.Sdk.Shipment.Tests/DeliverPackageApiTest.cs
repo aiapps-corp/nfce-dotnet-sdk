@@ -16,8 +16,8 @@ namespace Aiapps.Sdk.Shipment.Tests
                 DeliveredAt = DateTime.UtcNow,
                 DeliveredBy = new Operator { Name = "Paulo" },
                 DeliveryValidator = new Device { Name = "VALIDATOR-01" },
-                OrderReference = "30ad0ba9-ac93-4640-8bae-b4bf363bf2ab",
-                ProductReference = "b87935a0e3da41f28808af0210e22712",
+                OrderReference = "e863d7e1-d05e-4ccc-b75b-2da5438ba278",
+                ProductReference = "1",
             });
             Assert.IsNotNull(response.Status);
         }
@@ -39,8 +39,8 @@ namespace Aiapps.Sdk.Shipment.Tests
 
         private static Credencial ValidCredencial = new Credencial
         {
-            Email = "",
-            Senha = ""
+            Email = "teste@aiapps.com.br",
+            Senha = "123456"
         };
     }
 }

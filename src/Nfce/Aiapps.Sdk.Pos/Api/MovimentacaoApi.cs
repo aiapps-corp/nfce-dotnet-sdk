@@ -53,6 +53,7 @@ namespace Aiapps.Sdk.Pos.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var message = movimentacao.AsJson();
                 var response = await httpClient.PostAsync(route, message);

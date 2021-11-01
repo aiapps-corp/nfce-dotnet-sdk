@@ -110,6 +110,7 @@ namespace Aiapps.Sdk.Shipment.Api
                 httpClient.BaseAddress = new Uri(ShipmentBaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var message = obj.AsJson();
                 var response = await httpClient.PostAsync(route, message);

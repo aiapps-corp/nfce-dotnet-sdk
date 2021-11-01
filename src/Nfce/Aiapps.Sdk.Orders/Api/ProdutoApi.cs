@@ -105,6 +105,7 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var url = $"api/produtos";
                 var message = produto.AsJson();
@@ -120,6 +121,7 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var url = $"api/produtos?id={(produto.Id)}";
                 var message = produto.AsJson();
@@ -135,6 +137,7 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var url = $"api/produtos?id={id.Replace("-", "")}";
                 var response = await httpClient.DeleteAsync(url);
@@ -149,6 +152,7 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var message = entrega.AsJson();
                 var response = await httpClient.PostAsync(_routeEntregar, message);

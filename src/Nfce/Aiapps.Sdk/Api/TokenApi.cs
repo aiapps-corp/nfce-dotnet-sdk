@@ -20,6 +20,9 @@ namespace Aiapps.Sdk.Api
 #else
         protected string BaseHttpsAddress { get; set; } = "https://api.aiapps.com.br";
 #endif
+
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(59);
+
         protected static HttpClientHandler clientHandler = new HttpClientHandler();
         protected async Task<string> Token(string username, string password)
         {
@@ -27,6 +30,7 @@ namespace Aiapps.Sdk.Api
             {
                 httpClient.BaseAddress = new Uri(BaseAuthHttpsAddress);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+                httpClient.Timeout = Timeout;
                 var content = new StringContent($"grant_type=password&username={username}&password={password}");
                 var response = await httpClient.PostAsync("token", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -49,6 +53,7 @@ namespace Aiapps.Sdk.Api
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
 
                 var message = value.AsJson();
                 var response = await httpClient.PostAsync(route, message);
