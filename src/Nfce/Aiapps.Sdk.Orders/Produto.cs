@@ -26,6 +26,7 @@ namespace Aiapps.Sdk.Orders
         public bool? TemControleEstoque { get; set; }
         public int? MinimoEstoque { get; set; }
         public int? MaximoEstoque { get; set; }
+        public TaxSettings TaxSettings { get; set; } = new TaxSettings();
     }
 
     public class Categoria { 
@@ -65,5 +66,54 @@ namespace Aiapps.Sdk.Orders
         Adicional = 0,
         UnicaEscolha = 1,
         MultiplaEscolha = 2,
+    }
+
+    public class TaxSettings
+    {
+        public string Cfop { get; set; }
+        public InternalSettings Settings { get; set; } = new InternalSettings();
+
+        public class InternalSettings
+        {
+            public Ipi Ipi { get; set; } = new Ipi();
+            public Pis Pis { get; set; } = new Pis();
+            public Cofins Cofins { get; set; } = new Cofins();
+            public Icms Icms { get; set; } = new Icms();
+        }
+
+        public class Ipi
+        {
+            public string Cst { get; set; }
+            public decimal Aliquot { get; set; }
+        }
+        public class Pis
+        {
+            public string Cst { get; set; }
+            public decimal Aliquot { get; set; }
+        }
+        public class Cofins
+        {
+            public string Cst { get; set; }
+            public decimal Aliquot { get; set; }
+        }
+        public class Icms
+        {
+            public IcmsState[] States { get; set; } = new IcmsState[0];
+        }
+        public class IcmsState
+        {
+            public string State { get; set; }
+            public string Cst { get; set; }
+
+            public bool IsException { get; set; }
+            public decimal Aliquot { get; set; }
+            public decimal AliquotSt { get; set; }
+            public decimal AliquotMva { get; set; }
+            public decimal AliquotIcmsNonContributors { get; set; }
+            public decimal AliquotInternalUfDestination { get; set; }
+            public decimal PercentageDeferral { get; set; }
+            public decimal PercentageReductionBc { get; set; }
+            public decimal PercentageReductionBcSt { get; set; }
+        }
     }
 }

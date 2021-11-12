@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>pos-dotnet-sdk</PackageId>
+    <PackageId>Aiapps.Sdk.Pos</PackageId>
+    <Product>Aiapps.Sdk.Pos</Product>
     <Authors>Aiapps</Authors>
     <Company>Aiapps</Company>
     <Description>POS SDK para registrar operações em equipamentos de venda (PDV)</Description>
