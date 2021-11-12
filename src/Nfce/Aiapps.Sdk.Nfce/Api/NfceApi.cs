@@ -98,7 +98,7 @@ namespace Aiapps.Sdk.Nfce.Api
             }
             catch { }
 
-            return nfce;
+            return nfce ?? new Nfce();
         }
 
         public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)

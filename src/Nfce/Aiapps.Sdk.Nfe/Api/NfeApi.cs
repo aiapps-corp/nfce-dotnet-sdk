@@ -90,15 +90,15 @@ namespace Aiapps.Sdk.Nfe.Api
             return nfe;
         }
 
-        private static Nfe TryParse(Nfe nfce, string responseContent)
+        private static Nfe TryParse(Nfe nce, string responseContent)
         {
             try
             {
-                nfce = JsonConvert.DeserializeObject<Nfe>(responseContent);
+                nce = JsonConvert.DeserializeObject<Nfe>(responseContent);
             }
             catch { }
 
-            return nfce;
+            return nce ?? new Nfe();
         }
 
         public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)
