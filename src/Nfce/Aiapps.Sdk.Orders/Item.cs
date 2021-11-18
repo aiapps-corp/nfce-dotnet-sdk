@@ -9,6 +9,8 @@ namespace Aiapps.Sdk.Orders
         public string ProdutoId { get; set; }
         public string ProdutoNome { get; set; }
         public decimal Quantidade { get; set; }
+        public decimal? QuantidadeMovimentacaoEstoque { get; set; } = 1;
+        
         public decimal ValorUnitario { get; set; }
         public decimal Desconto { get; set; }
         public string Uuid { get; set; }
