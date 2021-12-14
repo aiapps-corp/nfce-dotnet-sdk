@@ -39,6 +39,13 @@ namespace Aiapps.Sdk.Financial.Tests
             });
             Assert.IsTrue(result.Sucesso);
         }
+        [TestMethod]
+        public async Task Delete_Test()
+        {
+            var receitaApi = new RevenueApi(ValidCredencial);
+            var result = await receitaApi.Delete("89150c4b-bd9f-419f-b164-a2a35ce9c278");
+            Assert.IsTrue(result.Sucesso);
+        }
 
         private static Credencial ValidCredencial = new Credencial
         {

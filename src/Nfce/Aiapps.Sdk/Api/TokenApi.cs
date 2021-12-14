@@ -60,5 +60,19 @@ namespace Aiapps.Sdk.Api
                 return response;
             }
         }
+
+        protected async Task<HttpResponseMessage> HttpDeleteAsync(string id, string route, string token)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
+
+                var response = await httpClient.DeleteAsync($"{BaseHttpsAddress}/{route}/{id}");
+                return response;
+            }
+        }
     }
 }
