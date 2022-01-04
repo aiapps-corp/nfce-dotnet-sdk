@@ -82,6 +82,11 @@ namespace Aiapps.Sdk.Nfe.Api
                     var obj = JsonConvert.DeserializeObject<dynamic>(responseContent);
                     nfe.Erro = $"{obj?.message}";
                 }
+                else if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    nfe = TryParse(nfe, responseContent);
+                    nfe.Erro = "Serviço indisponível";
+                }
             }
             catch (Exception ex)
             {
