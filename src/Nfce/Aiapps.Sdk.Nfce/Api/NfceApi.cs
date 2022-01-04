@@ -11,7 +11,7 @@ namespace Aiapps.Sdk.Nfce.Api
 {
     public class NfceApi : TokenApi
     {
-        protected string route = "api/nfce";
+        protected string route = "/api/nfce";
         private string _routeCancel = "api/nfce/cancelar";
         private string _routeDanfe = "api/nfce/baixardanfe";
         private int _maxRetry = 3;
@@ -155,13 +155,12 @@ namespace Aiapps.Sdk.Nfce.Api
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
-                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
                 httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
                 var message = pedido.AsJson();
-                var response = await httpClient.PostAsync(route, message);
+                var response = await httpClient.PostAsync(BaseHttpsAddress + route, message);
                 return response;
             }
         }
