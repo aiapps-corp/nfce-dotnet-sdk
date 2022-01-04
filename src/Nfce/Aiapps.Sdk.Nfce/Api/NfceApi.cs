@@ -160,7 +160,7 @@ namespace Aiapps.Sdk.Nfce.Api
                 httpClient.Timeout = Timeout;
 
                 var message = pedido.AsJson();
-                var response = await httpClient.PostAsync(BaseHttpsAddress + route, message);
+                var response = await httpClient.PostAsync($"{BaseHttpsAddress}{route}", message);
                 return response;
             }
         }
