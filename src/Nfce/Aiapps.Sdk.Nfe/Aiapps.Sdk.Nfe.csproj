@@ -10,7 +10,7 @@
     <Description>NFC-e SDK para emissão de NF-e usando a api do Mobi.</Description>
     <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace Aiapps.Sdk.Financial.Tests
         [TestMethod]
         public async Task Post_Test()
         {
-            var receitaApi = new RevenueApi(ValidCredencial);
+            var receitaApi = new RevenueApi(ValidCredential);
             var result = await receitaApi.Post(new Revenue
             {
                 CreditCardType = CreditCardType.visa,
@@ -42,15 +42,15 @@ namespace Aiapps.Sdk.Financial.Tests
         [TestMethod]
         public async Task Delete_Test()
         {
-            var receitaApi = new RevenueApi(ValidCredencial);
+            var receitaApi = new RevenueApi(ValidCredential);
             var result = await receitaApi.Delete("89150c4b-bd9f-419f-b164-a2a35ce9c278");
             Assert.IsTrue(result.Sucesso);
         }
 
-        private static Credencial ValidCredencial = new Credencial
+        private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",
-            Senha = "123456"
+            Password = "123456"
         };
     }
 }

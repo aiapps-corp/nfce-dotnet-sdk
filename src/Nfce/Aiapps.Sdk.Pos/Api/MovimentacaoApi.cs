@@ -12,25 +12,25 @@ namespace Aiapps.Sdk.Pos.Api
 {
     public class MovimentacaoApi : TokenApi
     {
-        private Credencial _credencial;
+        private Credential _credential;
         private string route = "api/pos/registrar";
 
-        public MovimentacaoApi(Credencial credencial)
+        public MovimentacaoApi(Credential credencial)
         {
-            _credencial = credencial ?? new Credencial();
+            _credential = credencial ?? new Credential();
             BaseHttpsAddress = "https://sales-api.aiapps.com.br";
         }
 
         public async Task<Retorno> Registrar(Movimentacao movimentacao)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpRegistrarAsync(movimentacao);
@@ -51,7 +51,7 @@ namespace Aiapps.Sdk.Pos.Api
             using (var httpClient = new HttpClient(clientHandler, false))
             {
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 

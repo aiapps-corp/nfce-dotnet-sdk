@@ -12,7 +12,7 @@ namespace Aiapps.Sdk.Licensing.Tests
         [TestMethod]
         public async Task Post_Test()
         {
-            var hookApi = new HookApi(ValidCredencial);
+            var hookApi = new HookApi(ValidCredential);
             var response = await hookApi.Post(new Hook { 
                 EventType = EventType.InvoiceAutorized,
                 HttpHeaders = "Authorization:7E257336-6AB0-4A22-A650-B455E332392A",
@@ -22,10 +22,10 @@ namespace Aiapps.Sdk.Licensing.Tests
             Assert.IsNotNull(response);
         }
 
-        private static Credencial ValidCredencial = new Credencial
+        private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",
-            Senha = "123456"
+            Password = "123456"
         };
     }
 }

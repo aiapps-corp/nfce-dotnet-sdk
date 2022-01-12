@@ -1,23 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>Aiapps.Sdk.Licensing</PackageId>
-    <Product>Aiapps.Sdk.Licensing</Product>
+    <PackageId>Aiapps.Sdk.ProductCatalog</PackageId>
+    <Product>Aiapps.Sdk.ProductCatalog</Product>
     <Authors>Aiapps</Authors>
     <Company>Aiapps</Company>
+    <Description>SDK para de integração com o módulo de catálogo de produtos do Mobi</Description>
     <Copyright>aiapps</Copyright>
-    <Description>SDK para conectar, ativar e cancelar assinaturas de integração com o Mobi</Description>
     <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
-    <Version>1.0.6</Version>
-  
-</PropertyGroup>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Polly" Version="7.2.2" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Aiapps.Sdk\Aiapps.Sdk.csproj" />
   </ItemGroup>

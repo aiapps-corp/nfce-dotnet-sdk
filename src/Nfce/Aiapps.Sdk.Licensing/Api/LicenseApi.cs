@@ -9,28 +9,28 @@ namespace Aiapps.Sdk.Licensing.Api
 {
     public class LicenseApi : TokenApi
     {
-        private Credencial _credencial;
+        private Credential _credential;
         private string route = "api/license";
 
-        public LicenseApi(Credencial credencial)
+        public LicenseApi(Credential credential)
         {
-            _credencial = credencial ?? new Credencial();
+            _credential = credential ?? new Credential();
             BaseHttpsAddress = "http://licensing.aiapps.com.br";
         }
 
         public async Task Connect(ConnectLicenseRequest value)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpPostAsync(value, $"{route}/connect", _credencial.Token);
+                  var r = await HttpPostAsync(value, $"{route}/connect", _credential.Token);
                   return r;
               });
             if (response.IsSuccessStatusCode == false)
@@ -42,17 +42,17 @@ namespace Aiapps.Sdk.Licensing.Api
 
         public async Task Activate(ActivateLicenseRequest value)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpPostAsync(value, $"{route}/activate", _credencial.Token);
+                  var r = await HttpPostAsync(value, $"{route}/activate", _credential.Token);
                   return r;
               });
             if (response.IsSuccessStatusCode == false)
@@ -64,17 +64,17 @@ namespace Aiapps.Sdk.Licensing.Api
 
         public async Task Cancel(CancelLicenseRequest value)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpPostAsync(value, $"{route}/cancel", _credencial.Token);
+                  var r = await HttpPostAsync(value, $"{route}/cancel", _credential.Token);
                   return r;
               });
             if (response.IsSuccessStatusCode == false)

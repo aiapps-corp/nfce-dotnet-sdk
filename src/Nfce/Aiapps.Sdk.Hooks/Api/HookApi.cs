@@ -9,28 +9,28 @@ namespace Aiapps.Sdk.Hooks.Api
 {
     public class HookApi : TokenApi
     {
-        private Credencial _credencial;
+        private Credential _credential;
         private string route = "api/hooks";
 
-        public HookApi(Credencial credencial)
+        public HookApi(Credential credential)
         {
-            _credencial = credencial ?? new Credencial();
+            _credential = credential ?? new Credential();
             BaseHttpsAddress = "http://hooks-api.aiapps.com.br";
         }
 
         public async Task<Hook> Post(Hook value)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpPostAsync(value, route, _credencial.Token);
+                  var r = await HttpPostAsync(value, route, _credential.Token);
                   return r;
               });
 

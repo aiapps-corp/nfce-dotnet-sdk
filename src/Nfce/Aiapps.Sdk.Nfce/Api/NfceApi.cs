@@ -16,11 +16,11 @@ namespace Aiapps.Sdk.Nfce.Api
         private string _routeDanfe = "api/nfce/baixardanfe";
         private int _maxRetry = 3;
 
-        private Credencial _credencial;
+        private Credential _credential;
 
-        public NfceApi(Credencial credencial)
+        public NfceApi(Credential credential)
         {
-            _credencial = credencial ?? new Credencial();
+            _credential = credential ?? new Credential();
             BaseHttpsAddress = "https://invoices-api.aiapps.com.br";
         }
 
@@ -35,12 +35,12 @@ namespace Aiapps.Sdk.Nfce.Api
             var responseContent = string.Empty;
             try
             {
-                if (string.IsNullOrWhiteSpace(_credencial.Email) &&
-                    string.IsNullOrWhiteSpace(_credencial.Senha))
+                if (string.IsNullOrWhiteSpace(_credential.Email) &&
+                    string.IsNullOrWhiteSpace(_credential.Password))
                     throw new InvalidOperationException("Credêncial inválida para emissão de nfc-e");
 
-                if (string.IsNullOrWhiteSpace(_credencial.Token))
-                    _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                if (string.IsNullOrWhiteSpace(_credential.Token))
+                    _credential.Token = await Token(_credential.Email, _credential.Password);
 
                 var response = await Policy
                   .Handle<Exception>()
@@ -53,7 +53,7 @@ namespace Aiapps.Sdk.Nfce.Api
                         .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                         .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                         {
-                            _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                            _credential.Token = await Token(_credential.Email, _credential.Password);
                         })
                         .ExecuteAsync(async () => {
                             var r = await HttpEmitirAsync(pedido);
@@ -108,8 +108,8 @@ namespace Aiapps.Sdk.Nfce.Api
 
         public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .Handle<Exception>()
@@ -122,7 +122,7 @@ namespace Aiapps.Sdk.Nfce.Api
                     .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                     .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                     {
-                        _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                        _credential.Token = await Token(_credential.Email, _credential.Password);
                     })
                     .ExecuteAsync(async () => {
                         var r = await HttpCancelarAsync(chaveAcesso, motivo);
@@ -135,14 +135,14 @@ namespace Aiapps.Sdk.Nfce.Api
 
         public async Task<HttpResponseMessage> DanfeAsync(string chaveAcesso)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpDanfeAsync(chaveAcesso);
@@ -155,7 +155,7 @@ namespace Aiapps.Sdk.Nfce.Api
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
@@ -170,7 +170,7 @@ namespace Aiapps.Sdk.Nfce.Api
             using (var httpClient = new HttpClient(clientHandler, false))
             {
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
@@ -184,7 +184,7 @@ namespace Aiapps.Sdk.Nfce.Api
             using (var httpClient = new HttpClient(clientHandler, false))
             {
                 httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 

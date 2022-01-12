@@ -16,5 +16,6 @@ namespace Aiapps.Sdk
         public bool IsSuccessStatus { get; set; }
         public string Status { get; set; }
         public string StatusMessage { get; set; }
+        public object Data { get; set; }
     }
 }

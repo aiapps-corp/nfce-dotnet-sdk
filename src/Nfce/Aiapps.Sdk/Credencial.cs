@@ -4,15 +4,16 @@ using System.Text;
 
 namespace Aiapps.Sdk
 {
-    public class Credencial
+    public class Credential
     {
-        public Credencial() : this(null, null) { }
-        public Credencial(string email, string senha) {
+        public Credential() : this(null, null) { }
+        public Credential(string email, string password)
+        {
             Email = email;
-            Senha = senha;
+            Password = password;
         }
         public string Email { get; set; }
-        public string Senha { get; set; }
+        public string Password { get; set; }
         public string Token { get; set; }
     }
 }

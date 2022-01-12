@@ -11,7 +11,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task CadastrarOuAtualizarAsync_Test()
         {
-            var produtoApi = new ProdutoApi(ValidCredencial);
+            var produtoApi = new ProdutoApi(ValidCredential);
             var retorno = await produtoApi.CadastrarOuAtualizarAsync(new Produto
             {
                 Id = "1",
@@ -26,7 +26,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task CadastrarAsync_Test()
         {
-            var produtoApi = new ProdutoApi(ValidCredencial);
+            var produtoApi = new ProdutoApi(ValidCredential);
             var retorno = await produtoApi.CadastrarOuAtualizarAsync(new Produto
             {
                 Id = "2",
@@ -41,7 +41,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task RemoverAsync_Test()
         {
-            var produtoApi = new ProdutoApi(ValidCredencial);
+            var produtoApi = new ProdutoApi(ValidCredential);
             var retorno = await produtoApi.Remover("2");
             Assert.IsTrue(retorno.Sucesso);
         }
@@ -49,7 +49,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task EntregarAsync_Test()
         {
-            var produtoApi = new ProdutoApi(ValidCredencial);
+            var produtoApi = new ProdutoApi(ValidCredential);
             var retorno = await produtoApi.Entregar(new Entrega { 
                 ProdutoId = "1",
                 ReferenciaPedido = "77487fac-324d-4a8e-9fc0-14f06f7fc482"
@@ -59,10 +59,10 @@ namespace Aiapps.Sdk.Nfce.Tests
                 retorno.Mensagem);
         }
 
-        private static Credencial ValidCredencial = new Credencial
+        private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",
-            Senha = "123456"
+            Password = "123456"
         };
     }
 }

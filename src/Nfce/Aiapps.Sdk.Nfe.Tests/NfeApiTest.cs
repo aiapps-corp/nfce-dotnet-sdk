@@ -13,7 +13,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task EmitirAsync_Credencial_Valida_Test()
         {
-            var nfeApi = new NfeApi(ValidCredencial);
+            var nfeApi = new NfeApi(ValidCredential);
             var response = await nfeApi.EmitirAsync(new Pedido
             {
                 Referencia = Guid.NewGuid().ToString(),
@@ -40,7 +40,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task EmitirBonusAsync_Credencial_Valida_Test()
         {
-            var nfeApi = new NfeApi(ValidCredencial);
+            var nfeApi = new NfeApi(ValidCredential);
             var response = await nfeApi.EmitirAsync(new Pedido
             {
                 Referencia = Guid.NewGuid().ToString(),
@@ -63,7 +63,7 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task CancelarAsyncNaoAutorizado_Test()
         {
-            var nfceApi = new NfeApi(ValidCredencial);
+            var nfceApi = new NfeApi(ValidCredential);
             var foiCancelado = await nfceApi.CancelarAsync("31200400000000000000650010000000051842021836", "Cliente cancelou a compra");
             Assert.IsFalse(foiCancelado);
         }
@@ -71,15 +71,15 @@ namespace Aiapps.Sdk.Nfce.Tests
         [TestMethod]
         public async Task DanfeAsyncNaoAutorizado_Test()
         {
-            var nfceApi = new NfeApi(ValidCredencial);
+            var nfceApi = new NfeApi(ValidCredential);
             var response = await nfceApi.DanfeAsync("31200400000000000000650010000000051842021836");
             Assert.AreEqual("NF-e 1-5 não está autorizada", response.ReasonPhrase);
         }
 
-        private static Credencial ValidCredencial = new Credencial
+        private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",
-            Senha = "123456"
+            Password= "123456"
         };       
     }
 }

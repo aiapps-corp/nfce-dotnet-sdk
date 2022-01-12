@@ -16,23 +16,23 @@ namespace Aiapps.Sdk.Shipment.Api
         private string _routeReturn = "api/shipment/return";
         private string _routeChangeTrackingNumber = "api/shipment/changeTrackingNumber";
 
-        private Credencial _credencial;
+        private Credential _credential;
 
-        public DeliverPackageApi(Credencial credencial)
+        public DeliverPackageApi(Credential credencial)
         {
-            _credencial = credencial ?? new Credencial();
+            _credential = credencial ?? new Credential();
         }
 
         public async Task<ReserveResponse> Reserve(ReservedPackage package)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(package, _routeReserve);
@@ -45,14 +45,14 @@ namespace Aiapps.Sdk.Shipment.Api
 
         public async Task<DeliverResponse> Deliver(DeliveredPackage deliveredPackage)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(deliveredPackage, _routeDeliver);
@@ -65,14 +65,14 @@ namespace Aiapps.Sdk.Shipment.Api
 
         public async Task<ReturnedResponse> Return(ReturnedPackage deliveredPackage)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(deliveredPackage, _routeReturn);
@@ -85,14 +85,14 @@ namespace Aiapps.Sdk.Shipment.Api
 
         public async Task<Response> ChangeTrackingNumber(ChangeTrackingNumberRequest value)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(value, _routeChangeTrackingNumber);
@@ -108,7 +108,7 @@ namespace Aiapps.Sdk.Shipment.Api
             using (var httpClient = new HttpClient(clientHandler, false))
             {
                 httpClient.BaseAddress = new Uri(ShipmentBaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credencial.Token);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 

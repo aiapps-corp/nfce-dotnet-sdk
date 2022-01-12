@@ -1,25 +1,24 @@
 ﻿using Aiapps.Sdk.Api;
+using Newtonsoft.Json;
 using Polly;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aiapps.Sdk.Orders.Api
+namespace Aiapps.Sdk.ProductCatalog.Api
 {
-    public class ProdutoApi : TokenApi
+    public class ProductApi : TokenApi
     {
-        private string _routeEntregar = "api/produtos/entregar";
-
         private Credential _credential;
 
-        public ProdutoApi(Credential credential)
+        public ProductApi(Credential credential)
         {
             _credential = credential ?? new Credential();
             BaseHttpsAddress = "https://production-api.aiapps.com.br";
         }
 
-        public async Task<Retorno> CadastrarOuAtualizarAsync(Produto produto)
+        public async Task<Response> AddOrUpdate(Product product)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -31,24 +30,38 @@ namespace Aiapps.Sdk.Orders.Api
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpAtualizarAsync(produto);
+                  var r = await HttpUpdateAsync(product);
                   return r;
               });
 
             if (response.StatusCode == HttpStatusCode.NotFound)
-                response = await HttpCadastrarAsync(produto);
+                response = await HttpAddAsync(product);
 
-            var retorno = new Retorno { Sucesso = true };
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var retorno = new Response { 
+                IsSuccessStatus = true,
+                Data = TryParseProduct(responseContent),
+            };
             if (response.IsSuccessStatusCode == false)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                retorno.Sucesso = false;
-                retorno.Mensagem = $"Falha ao sincronizar produto (Emissão de NFC-e) {responseContent}";                
+                retorno.IsSuccessStatus = false;
+                retorno.StatusMessage = $"Falha ao sincronizar produto (Emissão de NFC-e) {responseContent}";                
             }
             return retorno;
         }
 
-        public async Task<Retorno> Remover(string id)
+        private Product TryParseProduct(string responseContent)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<Product>(responseContent);
+            }
+            catch {
+                return null;
+            }
+        }
+
+        public async Task<Response> Remove(string id)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -60,45 +73,20 @@ namespace Aiapps.Sdk.Orders.Api
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () => {
-                  var r = await HttpRemoverAsync(id);
+                  var r = await HttpRemoveAsync(id);
                   return r;
               });
-            var retorno = new Retorno { Sucesso = true };
+            var retorno = new Response { IsSuccessStatus = true };
             if (response.IsSuccessStatusCode == false)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                retorno.Sucesso = false;
-                retorno.Mensagem = $"Falha ao remover produto (Emissão de NFC-e) {responseContent}";
+                retorno.IsSuccessStatus = false;
+                retorno.StatusMessage = $"Falha ao remover produto (Emissão de NFC-e) {responseContent}";
             }
             return retorno;
         }
 
-        public async Task<Retorno> Entregar(Entrega entrega)
-        {
-            if (string.IsNullOrWhiteSpace(_credential.Token))
-                _credential.Token = await Token(_credential.Email, _credential.Password);
-
-            var response = await Policy
-              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
-              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
-              {
-                  _credential.Token = await Token(_credential.Email, _credential.Password);
-              })
-              .ExecuteAsync(async () => {
-                  var r = await HttpEntregarAsync(entrega);
-                  return r;
-              });
-            var retorno = new Retorno { Sucesso = true };
-            if (response.IsSuccessStatusCode == false)
-            {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                retorno.Sucesso = false;
-                retorno.Mensagem = $"Falha ao entregar produto (Emissão de NFC-e) {responseContent}";
-            }
-            return retorno;
-        }
-
-        private async Task<HttpResponseMessage> HttpCadastrarAsync(Produto produto)
+        private async Task<HttpResponseMessage> HttpAddAsync(Product product)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
@@ -107,14 +95,14 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var url = $"api/produtos";
-                var message = produto.AsJson();
+                var url = $"api/productcatalog";
+                var message = product.AsJson();
                 var response = await httpClient.PostAsync(url, message);
                 return response;
             }
         }
 
-        private async Task<HttpResponseMessage> HttpAtualizarAsync(Produto produto)
+        private async Task<HttpResponseMessage> HttpUpdateAsync(Product product)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
@@ -123,14 +111,14 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var url = $"api/produtos?id={(produto.Id)}";
-                var message = produto.AsJson();
+                var url = $"api/productcatalog?id={(product.Id)}";
+                var message = product.AsJson();
                 var response = await httpClient.PutAsync(url, message);
                 return response;
             }
         }
 
-        private async Task<HttpResponseMessage> HttpRemoverAsync(string id)
+        private async Task<HttpResponseMessage> HttpRemoveAsync(string id)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
@@ -139,23 +127,8 @@ namespace Aiapps.Sdk.Orders.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var url = $"api/produtos?id={id.Replace("-", "")}";
+                var url = $"api/productcatalog?id={id.Replace("-", "")}";
                 var response = await httpClient.DeleteAsync(url);
-                return response;
-            }
-        }
-
-        private async Task<HttpResponseMessage> HttpEntregarAsync(Entrega entrega)
-        {
-            using (var httpClient = new HttpClient(clientHandler, false))
-            {
-                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
-                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
-                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
-                httpClient.Timeout = Timeout;
-
-                var message = entrega.AsJson();
-                var response = await httpClient.PostAsync(_routeEntregar, message);
                 return response;
             }
         }

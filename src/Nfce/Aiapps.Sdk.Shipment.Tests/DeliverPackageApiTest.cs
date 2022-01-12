@@ -11,7 +11,7 @@ namespace Aiapps.Sdk.Shipment.Tests
         [TestMethod]
         public async Task Deliver_Valid_Credencial_Test()
         {
-            var deliverPackageApi = new DeliverPackageApi(ValidCredencial);
+            var deliverPackageApi = new DeliverPackageApi(ValidCredential);
             var response = await deliverPackageApi.Deliver(new DeliveredPackage { 
                 DeliveredAt = DateTime.UtcNow,
                 DeliveredBy = new Operator { Name = "Paulo" },
@@ -24,7 +24,7 @@ namespace Aiapps.Sdk.Shipment.Tests
         [TestMethod]
         public async Task DeliverTrackingNumber_Valid_Credencial_Test()
         {
-            var deliverPackageApi = new DeliverPackageApi(ValidCredencial);
+            var deliverPackageApi = new DeliverPackageApi(ValidCredential);
             var response = await deliverPackageApi.Deliver(new DeliveredPackage
             {
                 Reference = "30ad0ba9-ac93-4640-8bae-b4bf363bf2ab",
@@ -37,10 +37,10 @@ namespace Aiapps.Sdk.Shipment.Tests
             Assert.IsNotNull(response.Status);
         }
 
-        private static Credencial ValidCredencial = new Credencial
+        private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",
-            Senha = "123456"
+            Password = "123456"
         };
     }
 }

@@ -11,28 +11,28 @@ namespace Aiapps.Sdk.Financial.Api
     {
         private string _revenueRoute = "api/revenues";
 
-        private Credencial _credencial;
+        private Credential _credential;
 
-        public RevenueApi(Credencial credencial)
+        public RevenueApi(Credential credential)
         {
             BaseHttpsAddress = "https://financial-api.aiapps.com.br";
-            _credencial = credencial ?? new Credencial();
+            _credential = credential ?? new Credential();
         }
 
         public async Task<Retorno> Post(Revenue value)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () =>
               {
-                  var r = await HttpPostAsync(value, _revenueRoute, _credencial.Token);
+                  var r = await HttpPostAsync(value, _revenueRoute, _credential.Token);
                   return r;
               });
 
@@ -48,18 +48,18 @@ namespace Aiapps.Sdk.Financial.Api
 
         public async Task<Retorno> Delete(string reference)
         {
-            if (string.IsNullOrWhiteSpace(_credencial.Token))
-                _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credencial.Token = await Token(_credencial.Email, _credencial.Senha);
+                  _credential.Token = await Token(_credential.Email, _credential.Password);
               })
               .ExecuteAsync(async () =>
               {
-                  var r = await HttpDeleteAsync(reference, _revenueRoute, _credencial.Token);
+                  var r = await HttpDeleteAsync(reference, _revenueRoute, _credential.Token);
                   return r;
               });
 
