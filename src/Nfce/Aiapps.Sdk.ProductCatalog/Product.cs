@@ -88,17 +88,17 @@ namespace Aiapps.Sdk.ProductCatalog
         public class Ipi
         {
             public string Cst { get; set; }
-            public decimal Aliquot { get; set; }
+            public decimal? Aliquot { get; set; }
         }
         public class Pis
         {
             public string Cst { get; set; }
-            public decimal Aliquot { get; set; }
+            public decimal? Aliquot { get; set; }
         }
         public class Cofins
         {
             public string Cst { get; set; }
-            public decimal Aliquot { get; set; }
+            public decimal? Aliquot { get; set; }
         }
         public class Icms
         {
@@ -110,14 +110,14 @@ namespace Aiapps.Sdk.ProductCatalog
             public string Cst { get; set; }
 
             public bool IsException { get; set; }
-            public decimal Aliquot { get; set; }
-            public decimal AliquotSt { get; set; }
-            public decimal AliquotMva { get; set; }
-            public decimal AliquotIcmsNonContributors { get; set; }
-            public decimal AliquotInternalUfDestination { get; set; }
-            public decimal PercentageDeferral { get; set; }
-            public decimal PercentageReductionBc { get; set; }
-            public decimal PercentageReductionBcSt { get; set; }
+            public decimal? Aliquot { get; set; }
+            public decimal? AliquotSt { get; set; }
+            public decimal? AliquotMva { get; set; }
+            public decimal? AliquotIcmsNonContributors { get; set; }
+            public decimal? AliquotInternalUfDestination { get; set; }
+            public decimal? PercentageDeferral { get; set; }
+            public decimal? PercentageReductionBc { get; set; }
+            public decimal? PercentageReductionBcSt { get; set; }
         }
     }
 }
