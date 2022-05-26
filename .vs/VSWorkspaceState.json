@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\Nfce",
+    "\\src\\Nfce\\Aiapps.Sdk.Licensing"
   ],
+  "SelectedNode": "\\src\\Nfce\\Aiapps.Sdk.Licensing\\Aiapps.Sdk.Licensing.csproj",
   "PreviewInSolutionExplorer": false
 }
