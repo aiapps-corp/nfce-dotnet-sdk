@@ -106,7 +106,7 @@ namespace Aiapps.Sdk.Nfe.Api
             return nce ?? new Nfe();
         }
 
-        public async Task<bool> CancelarAsync(string chaveAcesso, string motivo)
+        public async Task<bool> CancelarAsync(string chaveAcesso, string motivo, string referencia)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -125,7 +125,7 @@ namespace Aiapps.Sdk.Nfe.Api
                         _credential.Token = await Token(_credential.Email, _credential.Password);
                     })
                     .ExecuteAsync(async () => {
-                        var r = await HttpCancelarAsync(chaveAcesso, motivo);
+                        var r = await HttpCancelarAsync(chaveAcesso, motivo, referencia);
                         return r;
                     }).ConfigureAwait(false);
               }).ConfigureAwait(false);
@@ -166,7 +166,7 @@ namespace Aiapps.Sdk.Nfe.Api
             }
         }
 
-        private async Task<HttpResponseMessage> HttpCancelarAsync(string chaveAcesso, string motivo)
+        private async Task<HttpResponseMessage> HttpCancelarAsync(string chaveAcesso, string motivo, string referencia)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
@@ -175,7 +175,7 @@ namespace Aiapps.Sdk.Nfe.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo }.AsJson());
+                var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo, referencia }.AsJson());
                 return response;
             }
         }
