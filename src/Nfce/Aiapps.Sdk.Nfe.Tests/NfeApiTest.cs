@@ -64,7 +64,12 @@ namespace Aiapps.Sdk.Nfce.Tests
         public async Task CancelarAsyncNaoAutorizado_Test()
         {
             var nfceApi = new NfeApi(ValidCredential);
-            var foiCancelado = await nfceApi.CancelarAsync("31200400000000000000650010000000051842021836", "Cliente cancelou a compra", null);
+            var foiCancelado = await nfceApi.CancelarAsync(new Invoices.CancelarNf
+            {
+                Chave = "31200400000000000000650010000000051842021836",
+                Motivo = "Cliente cancelou a compra",
+                Referencia = null
+            });
             Assert.IsFalse(foiCancelado);
         }
 

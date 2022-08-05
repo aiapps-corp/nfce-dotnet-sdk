@@ -1,4 +1,5 @@
 ﻿using Aiapps.Sdk.Api;
+using Aiapps.Sdk.Invoices;
 using Aiapps.Sdk.Orders;
 using Newtonsoft.Json;
 using Polly;
@@ -106,7 +107,7 @@ namespace Aiapps.Sdk.Nfe.Api
             return nce ?? new Nfe();
         }
 
-        public async Task<bool> CancelarAsync(string chaveAcesso, string motivo, string referencia)
+        public async Task<bool> CancelarAsync(CancelarNf value)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -125,7 +126,7 @@ namespace Aiapps.Sdk.Nfe.Api
                         _credential.Token = await Token(_credential.Email, _credential.Password);
                     })
                     .ExecuteAsync(async () => {
-                        var r = await HttpCancelarAsync(chaveAcesso, motivo, referencia);
+                        var r = await HttpCancelarAsync(value);
                         return r;
                     }).ConfigureAwait(false);
               }).ConfigureAwait(false);
@@ -166,7 +167,7 @@ namespace Aiapps.Sdk.Nfe.Api
             }
         }
 
-        private async Task<HttpResponseMessage> HttpCancelarAsync(string chaveAcesso, string motivo, string referencia)
+        private async Task<HttpResponseMessage> HttpCancelarAsync(CancelarNf value)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
             {
@@ -175,7 +176,7 @@ namespace Aiapps.Sdk.Nfe.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var response = await httpClient.PostAsync(_routeCancel, new { chave = chaveAcesso, motivo, referencia }.AsJson());
+                var response = await httpClient.PostAsync(_routeCancel, value.AsJson());
                 return response;
             }
         }
