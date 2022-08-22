@@ -15,6 +15,13 @@ namespace Aiapps.Sdk.Licensing
         public string Coupon { get; set; }
     }
 
+    public class ConnectLicenseResponse
+    {
+        public string Id { get; set; }
+        public string DisplayName { get; set; }
+        public string Document { get; set; }
+    }
+
     public class ActivateLicenseRequest : LicenseRequest
     {
     }

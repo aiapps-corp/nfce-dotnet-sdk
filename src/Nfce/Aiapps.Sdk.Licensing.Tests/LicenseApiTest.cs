@@ -12,7 +12,7 @@ namespace Aiapps.Sdk.Licensing.Tests
         public async Task Connect_Test()
         {
             var licenseApi = new LicenseApi(ValidCredential);
-            await licenseApi.Connect(new ConnectLicenseRequest { 
+            var response = await licenseApi.Connect(new ConnectLicenseRequest { 
                 Id = "BE066D39-2B67-76C7-41C6-52357E7E3651",
             });
         }

@@ -1,4 +1,5 @@
 ﻿using Aiapps.Sdk.Api;
+using Newtonsoft.Json;
 using Polly;
 using System;
 using System.Net;
@@ -18,7 +19,7 @@ namespace Aiapps.Sdk.Licensing.Api
             BaseHttpsAddress = "http://licensing.aiapps.com.br";
         }
 
-        public async Task Connect(ConnectLicenseRequest value)
+        public async Task<ConnectLicenseResponse> Connect(ConnectLicenseRequest value)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -33,11 +34,12 @@ namespace Aiapps.Sdk.Licensing.Api
                   var r = await HttpPostAsync(value, $"{route}/connect", _credential.Token);
                   return r;
               });
-            if (response.IsSuccessStatusCode == false)
-            {
-                var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)            
                 throw new Exception(responseContent);
-            }
+
+            var result = JsonConvert.DeserializeObject<ConnectLicenseResponse>(responseContent);
+            return result;
         }
 
         public async Task Activate(ActivateLicenseRequest value)
