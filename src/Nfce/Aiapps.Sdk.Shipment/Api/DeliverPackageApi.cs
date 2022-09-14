@@ -34,13 +34,21 @@ namespace Aiapps.Sdk.Shipment.Api
               {
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
-              .ExecuteAsync(async () => {
+              .ExecuteAsync(async () =>
+              {
                   var r = await HttpPostAsync(package, _routeReserve);
                   return r;
               });
             var responseContent = await response.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<ReserveResponse>(responseContent);
-            return responseObject;
+            try
+            {
+                var responseObject = JsonConvert.DeserializeObject<ReserveResponse>(responseContent);
+                return responseObject;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(responseContent, ex);
+            }
         }
 
         public async Task<DeliverResponse> Deliver(DeliveredPackage deliveredPackage)
@@ -54,13 +62,13 @@ namespace Aiapps.Sdk.Shipment.Api
               {
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
-              .ExecuteAsync(async () => {
+              .ExecuteAsync(async () =>
+              {
                   var r = await HttpPostAsync(deliveredPackage, _routeDeliver);
                   return r;
               });
             var responseContent = await response.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<DeliverResponse>(responseContent);
-            return responseObject;
+            return TryDeserializeObject<DeliverResponse>(responseContent);
         }
 
         public async Task<ReturnedResponse> Return(ReturnedPackage deliveredPackage)
@@ -74,13 +82,13 @@ namespace Aiapps.Sdk.Shipment.Api
               {
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
-              .ExecuteAsync(async () => {
+              .ExecuteAsync(async () =>
+              {
                   var r = await HttpPostAsync(deliveredPackage, _routeReturn);
                   return r;
               });
             var responseContent = await response.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<ReturnedResponse>(responseContent);
-            return responseObject;
+            return TryDeserializeObject<ReturnedResponse>(responseContent);
         }
 
         public async Task<Response> ChangeTrackingNumber(ChangeTrackingNumberRequest value)
@@ -94,13 +102,26 @@ namespace Aiapps.Sdk.Shipment.Api
               {
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
-              .ExecuteAsync(async () => {
+              .ExecuteAsync(async () =>
+              {
                   var r = await HttpPostAsync(value, _routeChangeTrackingNumber);
                   return r;
               });
             var responseContent = await response.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<Response>(responseContent);
-            return responseObject;
+            return TryDeserializeObject<Response>(responseContent);
+        }
+
+        private static T TryDeserializeObject<T>(string responseContent)
+        {
+            try
+            {
+                var responseObject = JsonConvert.DeserializeObject<T>(responseContent);
+                return responseObject;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(responseContent, ex);
+            }
         }
 
         private async Task<HttpResponseMessage> HttpPostAsync(object obj, string route)
