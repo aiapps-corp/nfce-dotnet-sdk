@@ -7,6 +7,7 @@ namespace Aiapps.Sdk.Licensing
     public class LicenseRequest
     {
         public string Id { get; set; }
+        public string IntegrationCode { get; set; }
     }
 
     public class ConnectLicenseRequest : LicenseRequest
