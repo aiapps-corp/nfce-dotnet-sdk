@@ -45,7 +45,7 @@ namespace Aiapps.Sdk.ProductCatalog.Api
             if (response.IsSuccessStatusCode == false)
             {
                 retorno.IsSuccessStatus = false;
-                retorno.StatusMessage = $"Falha ao sincronizar produto (Emissão de NFC-e) {responseContent}";                
+                retorno.StatusMessage = $"Falha ao sincronizar produto ({response.StatusCode}) - ({responseContent})";                
             }
             return retorno;
         }
