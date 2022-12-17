@@ -111,7 +111,7 @@ namespace Aiapps.Sdk.ProductCatalog.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var url = $"api/productcatalog?id={(product.Id)}";
+                var url = $"api/productcatalog/{(product.Id)}";
                 var message = product.AsJson();
                 var response = await httpClient.PutAsync(url, message);
                 return response;
@@ -127,7 +127,7 @@ namespace Aiapps.Sdk.ProductCatalog.Api
                 httpClient.DefaultRequestHeaders.AcceptApplicationJson();
                 httpClient.Timeout = Timeout;
 
-                var url = $"api/productcatalog?id={id.Replace("-", "")}";
+                var url = $"api/productcatalog/{id.Replace("-", "")}";
                 var response = await httpClient.DeleteAsync(url);
                 return response;
             }
