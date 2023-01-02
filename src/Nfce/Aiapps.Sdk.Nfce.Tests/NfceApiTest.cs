@@ -156,6 +156,14 @@ namespace Aiapps.Sdk.Nfce.Tests
             Assert.AreEqual("NF-e 1-5 não está autorizada", response.ReasonPhrase);
         }
 
+        [TestMethod]
+        public async Task ProtocolAsyncNaoAutorizado_Test()
+        {
+            var nfceApi = new NfceApi(ValidCredential);
+            var protocol = await nfceApi.GetProtocolAsync("21211004228479000179650100000656491004181672");
+            Assert.IsNull(protocol);
+        }
+
         private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",

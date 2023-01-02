@@ -15,6 +15,7 @@ namespace Aiapps.Sdk.Nfce.Api
         protected string route = "/api/nfce";
         private string _routeCancel = "api/nfce/cancelar";
         private string _routeDanfe = "api/nfce/baixardanfe";
+        private string _routeProtocol = "api/nfce/protocol";
         private int _maxRetry = 3;
 
         private Credential _credential;
@@ -49,14 +50,16 @@ namespace Aiapps.Sdk.Nfce.Api
                   {
                       await Task.Delay(300 * retryCount).ConfigureAwait(false);
                   })
-                  .ExecuteAsync(async () => {
+                  .ExecuteAsync(async () =>
+                  {
                       return await Policy
                         .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                         .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                         {
                             _credential.Token = await Token(_credential.Email, _credential.Password);
                         })
-                        .ExecuteAsync(async () => {
+                        .ExecuteAsync(async () =>
+                        {
                             var r = await HttpEmitirAsync(pedido);
                             return r;
                         }).ConfigureAwait(false);
@@ -118,14 +121,16 @@ namespace Aiapps.Sdk.Nfce.Api
               {
                   await Task.Delay(300 * retryCount).ConfigureAwait(false);
               })
-              .ExecuteAsync(async () => {
+              .ExecuteAsync(async () =>
+              {
                   return await Policy
                     .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                     .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                     {
                         _credential.Token = await Token(_credential.Email, _credential.Password);
                     })
-                    .ExecuteAsync(async () => {
+                    .ExecuteAsync(async () =>
+                    {
                         var r = await HttpCancelarAsync(value);
                         return r;
                     }).ConfigureAwait(false);
@@ -145,11 +150,32 @@ namespace Aiapps.Sdk.Nfce.Api
               {
                   _credential.Token = await Token(_credential.Email, _credential.Password);
               })
-              .ExecuteAsync(async () => {
+              .ExecuteAsync(async () =>
+              {
                   var r = await HttpDanfeAsync(chaveAcesso);
                   return r;
               });
             return response;
+        }
+        public async Task<string> GetProtocolAsync(string chaveAcesso)
+        {
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
+
+            var response = await Policy
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.NotFound)
+              .WaitAndRetryAsync(3, (retry) => TimeSpan.FromSeconds(retry))
+              .ExecuteAsync(async () =>
+              {
+                  var r = await HttpProtocolAsync(chaveAcesso);
+                  return r;
+              });
+            if (response.IsSuccessStatusCode == false)
+                return null;
+
+            var content = await response.Content.ReadAsStringAsync();
+            var protocol = JsonConvert.DeserializeObject<dynamic>(content);
+            return protocol.protocol;
         }
 
         private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido)
@@ -190,6 +216,20 @@ namespace Aiapps.Sdk.Nfce.Api
                 httpClient.Timeout = Timeout;
 
                 var response = await httpClient.GetAsync($"{_routeDanfe}?chaveAcesso={chaveAcesso}");
+                return response;
+            }
+        }
+
+        private async Task<HttpResponseMessage> HttpProtocolAsync(string chaveAcesso)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
+
+                var response = await httpClient.GetAsync($"{_routeProtocol}?chaveAcesso={chaveAcesso}");
                 return response;
             }
         }
