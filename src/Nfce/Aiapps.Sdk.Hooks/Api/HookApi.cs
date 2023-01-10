@@ -37,7 +37,7 @@ namespace Aiapps.Sdk.Hooks.Api
             if (response.IsSuccessStatusCode == false)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                throw new Exception(responseContent);
+                throw new Exception($"Status: {response.StatusCode} - {responseContent}");
             }
             return value;
         }
