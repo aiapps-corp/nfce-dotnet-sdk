@@ -10,4 +10,9 @@ namespace Aiapps.Sdk.Hooks
         public string BasicAuthenticationPassword { get; set; }
         public string HttpHeaders { get; set; }
     }
+
+    public class HookResponse : Hook
+    { 
+        public int OwnerId { get; set; }
+    }
 }

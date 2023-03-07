@@ -1,4 +1,5 @@
 ﻿using Aiapps.Sdk.Api;
+using Newtonsoft.Json;
 using Polly;
 using System;
 using System.Net;
@@ -18,7 +19,7 @@ namespace Aiapps.Sdk.Hooks.Api
             BaseHttpsAddress = "http://hooks-api.aiapps.com.br";
         }
 
-        public async Task<Hook> Post(Hook value)
+        public async Task<HookResponse> Post(Hook value)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -34,12 +35,12 @@ namespace Aiapps.Sdk.Hooks.Api
                   return r;
               });
 
+            var responseContent = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
                 throw new Exception($"Status: {response.StatusCode} - {responseContent}");
             }
-            return value;
+            return JsonConvert.DeserializeObject<HookResponse>(responseContent);
         }
     }
 }
