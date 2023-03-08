@@ -36,7 +36,7 @@ namespace Aiapps.Sdk.Hooks.Api
               });
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
+            if (response.IsSuccessStatusCode == false && response.StatusCode != HttpStatusCode.Conflict)
             {
                 throw new Exception($"Status: {response.StatusCode} - {responseContent}");
             }
