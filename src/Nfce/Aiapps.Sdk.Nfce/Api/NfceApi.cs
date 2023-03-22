@@ -56,7 +56,7 @@ namespace Aiapps.Sdk.Nfce.Api
                         .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                         .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                         {
-                            _credential.Token = await Token(_credential.Email, _credential.Password);
+                            await RetryToken(_credential);
                         })
                         .ExecuteAsync(async () =>
                         {
@@ -127,7 +127,7 @@ namespace Aiapps.Sdk.Nfce.Api
                     .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                     .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                     {
-                        _credential.Token = await Token(_credential.Email, _credential.Password);
+                        await RetryToken(_credential);
                     })
                     .ExecuteAsync(async () =>
                     {
@@ -148,7 +148,7 @@ namespace Aiapps.Sdk.Nfce.Api
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credential.Token = await Token(_credential.Email, _credential.Password);
+                  await RetryToken(_credential);
               })
               .ExecuteAsync(async () =>
               {

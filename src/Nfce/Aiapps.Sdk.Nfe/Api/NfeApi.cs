@@ -54,7 +54,7 @@ namespace Aiapps.Sdk.Nfe.Api
                         .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                         .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                         {
-                            _credential.Token = await Token(_credential.Email, _credential.Password);
+                            await RetryToken(_credential);
                         })
                         .ExecuteAsync(async () => {
                             var r = await HttpEmitirAsync(pedido);
@@ -123,7 +123,7 @@ namespace Aiapps.Sdk.Nfe.Api
                     .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
                     .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
                     {
-                        _credential.Token = await Token(_credential.Email, _credential.Password);
+                        await RetryToken(_credential);
                     })
                     .ExecuteAsync(async () => {
                         var r = await HttpCancelarAsync(value);
@@ -143,7 +143,7 @@ namespace Aiapps.Sdk.Nfe.Api
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credential.Token = await Token(_credential.Email, _credential.Password);
+                  await RetryToken(_credential);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpDanfeAsync(chaveAcesso);

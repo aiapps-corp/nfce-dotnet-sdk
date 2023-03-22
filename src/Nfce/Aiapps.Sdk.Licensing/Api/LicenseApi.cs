@@ -28,7 +28,7 @@ namespace Aiapps.Sdk.Licensing.Api
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credential.Token = await Token(_credential.Email, _credential.Password);
+                  await RetryToken(_credential);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(value, $"{route}/connect", _credential.Token);
@@ -51,7 +51,7 @@ namespace Aiapps.Sdk.Licensing.Api
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credential.Token = await Token(_credential.Email, _credential.Password);
+                  await RetryToken(_credential);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(value, $"{route}/activate", _credential.Token);
@@ -73,7 +73,7 @@ namespace Aiapps.Sdk.Licensing.Api
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
               .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
               {
-                  _credential.Token = await Token(_credential.Email, _credential.Password);
+                  await RetryToken(_credential);
               })
               .ExecuteAsync(async () => {
                   var r = await HttpPostAsync(value, $"{route}/cancel", _credential.Token);

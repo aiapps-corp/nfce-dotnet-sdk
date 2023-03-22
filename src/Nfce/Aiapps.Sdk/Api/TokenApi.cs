@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -34,15 +35,28 @@ namespace Aiapps.Sdk.Api
                 var content = new StringContent($"grant_type=password&username={username}&password={password}");
                 var response = await httpClient.PostAsync("token", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
+                dynamic jsonObj = JsonConvert.DeserializeObject(responseContent);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return null;
+                    string error = jsonObj.error_description.ToString();
+                    throw new ApplicationException(error);
                 }
-                dynamic jsonObj = JsonConvert.DeserializeObject(responseContent);
                 var expires_in = (double)jsonObj.expires_in;
                 var token = jsonObj.access_token.ToString();
                 var expiryDate = DateTime.UtcNow.AddSeconds(expires_in);
                 return token;
+            }
+        }
+
+        protected async Task RetryToken(Credential credential)
+        {
+            try
+            {
+                credential.Token = await Token(credential.Email, credential.Password);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 

@@ -12,7 +12,18 @@ namespace Aiapps.Sdk.Licensing.Tests
         public async Task Connect_Test()
         {
             var licenseApi = new LicenseApi(ValidCredential);
-            var response = await licenseApi.Connect(new ConnectLicenseRequest { 
+            var response = await licenseApi.Connect(new ConnectLicenseRequest
+            {
+                Id = "BE066D39-2B67-76C7-41C6-52357E7E3651",
+            });
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public async Task ConnectInvalid_Test()
+        {
+            var licenseApi = new LicenseApi(InvalidCredential);
+            var response = await licenseApi.Connect(new ConnectLicenseRequest
+            {
                 Id = "BE066D39-2B67-76C7-41C6-52357E7E3651",
             });
         }
@@ -35,10 +46,17 @@ namespace Aiapps.Sdk.Licensing.Tests
             });
         }
 
+        private static Credential InvalidCredential = new Credential
+        {
+            Email = "a",
+            Password = "b",
+            Token = "c"
+        };
+
         private static Credential ValidCredential = new Credential
         {
             Email = "teste@aiapps.com.br",
-            Password= "123456"
+            Password = "123456"
         };
     }
 }
