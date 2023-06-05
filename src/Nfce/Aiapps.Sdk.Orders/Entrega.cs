@@ -26,6 +26,8 @@ namespace Aiapps.Sdk.Orders
         Emitente = 0,
         Destinatario = 1,
         Terceiros = 2,
+        TransporteProprioPorContaDoRemetente = 3,
+        TransporteProprioPorContaDoDestinatario = 4,
         Gratuito = 9,
     }
 }
