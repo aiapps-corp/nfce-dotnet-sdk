@@ -15,6 +15,7 @@ namespace Aiapps.Sdk.Nfe.Api
         protected string route = "api/nfe";
         private string _routeCancel = "api/nfe/cancelar";
         private string _routeDanfe = "api/nfe/baixardanfe";
+        private string _routeXml = "api/nfe/baixarxml";
         private int _maxRetry = 3;
 
         private Credential _credential;
@@ -152,6 +153,25 @@ namespace Aiapps.Sdk.Nfe.Api
             return response;
         }
 
+        public async Task<HttpResponseMessage> XmlAsync(string chaveAcesso)
+        {
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
+
+            var response = await Policy
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+              .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+              {
+                  await RetryToken(_credential);
+              })
+              .ExecuteAsync(async () =>
+              {
+                  var r = await HttpXmlAsync(chaveAcesso);
+                  return r;
+              });
+            return response;
+        }
+
         private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido)
         {
             using (var httpClient = new HttpClient(clientHandler, false))
@@ -191,6 +211,20 @@ namespace Aiapps.Sdk.Nfe.Api
                 httpClient.Timeout = Timeout;
 
                 var response = await httpClient.GetAsync($"{_routeDanfe}?chaveAcesso={chaveAcesso}");
+                return response;
+            }
+        }
+
+        private async Task<HttpResponseMessage> HttpXmlAsync(string chaveAcesso)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
+
+                var response = await httpClient.GetAsync($"{_routeXml}?chaveAcesso={chaveAcesso}");
                 return response;
             }
         }
