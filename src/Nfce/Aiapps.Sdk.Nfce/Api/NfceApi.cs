@@ -17,7 +17,7 @@ namespace Aiapps.Sdk.Nfce.Api
         private string _routeDanfe = "api/nfce/baixardanfe";
         private string _routeXml = "api/nfce/baixarxml";
         private string _routeProtocol = "api/nfce/protocol";
-        private int _maxRetry = 3;
+        private int _maxRetry = 1;
 
         private Credential _credential;
 
@@ -49,10 +49,7 @@ namespace Aiapps.Sdk.Nfce.Api
 
                 var response = await Policy
                   .Handle<Exception>()
-                  .RetryAsync(MaxRetry, async (exception, retryCount) =>
-                  {
-                      await Task.Delay(300 * retryCount).ConfigureAwait(false);
-                  })
+                  .WaitAndRetryAsync(MaxRetry, (retry) => TimeSpan.FromSeconds(retry))
                   .ExecuteAsync(async () =>
                   {
                       return await Policy
@@ -120,10 +117,7 @@ namespace Aiapps.Sdk.Nfce.Api
 
             var response = await Policy
               .Handle<Exception>()
-              .RetryAsync(MaxRetry, async (exception, retryCount) =>
-              {
-                  await Task.Delay(300 * retryCount).ConfigureAwait(false);
-              })
+              .WaitAndRetryAsync(MaxRetry, (retry) => TimeSpan.FromSeconds(retry))
               .ExecuteAsync(async () =>
               {
                   return await Policy
