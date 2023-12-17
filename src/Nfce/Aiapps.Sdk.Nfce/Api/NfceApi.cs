@@ -21,6 +21,8 @@ namespace Aiapps.Sdk.Nfce.Api
 
         private Credential _credential;
 
+        public int MaxRetry { get => _maxRetry; set => _maxRetry = value; }
+
         public NfceApi(Credential credential)
         {
             _credential = credential ?? new Credential();
@@ -47,7 +49,7 @@ namespace Aiapps.Sdk.Nfce.Api
 
                 var response = await Policy
                   .Handle<Exception>()
-                  .RetryAsync(_maxRetry, async (exception, retryCount) =>
+                  .RetryAsync(MaxRetry, async (exception, retryCount) =>
                   {
                       await Task.Delay(300 * retryCount).ConfigureAwait(false);
                   })
@@ -118,7 +120,7 @@ namespace Aiapps.Sdk.Nfce.Api
 
             var response = await Policy
               .Handle<Exception>()
-              .RetryAsync(_maxRetry, async (exception, retryCount) =>
+              .RetryAsync(MaxRetry, async (exception, retryCount) =>
               {
                   await Task.Delay(300 * retryCount).ConfigureAwait(false);
               })
@@ -184,7 +186,7 @@ namespace Aiapps.Sdk.Nfce.Api
 
             var response = await Policy
               .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.NotFound)
-              .WaitAndRetryAsync(3, (retry) => TimeSpan.FromSeconds(retry))
+              .WaitAndRetryAsync(MaxRetry, (retry) => TimeSpan.FromSeconds(retry))
               .ExecuteAsync(async () =>
               {
                   var r = await HttpProtocolAsync(chaveAcesso);
