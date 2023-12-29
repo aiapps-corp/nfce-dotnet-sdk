@@ -16,7 +16,6 @@ namespace Aiapps.Sdk.Nfe.Api
         private string _routeCancel = "api/nfe/cancelar";
         private string _routeDanfe = "api/nfe/baixardanfe";
         private string _routeXml = "api/nfe/baixarxml";
-        private int _maxRetry = 3;
 
         private Credential _credential;
 
@@ -46,7 +45,7 @@ namespace Aiapps.Sdk.Nfe.Api
 
                 var response = await Policy
                   .Handle<Exception>()
-                  .RetryAsync(_maxRetry, async (exception, retryCount) =>
+                  .RetryAsync(MaxRetry, async (exception, retryCount) =>
                   {
                       await Task.Delay(300 * retryCount).ConfigureAwait(false);
                   })
@@ -115,7 +114,7 @@ namespace Aiapps.Sdk.Nfe.Api
 
             var response = await Policy
               .Handle<Exception>()
-              .RetryAsync(_maxRetry, async (exception, retryCount) =>
+              .RetryAsync(MaxRetry, async (exception, retryCount) =>
               {
                   await Task.Delay(300 * retryCount).ConfigureAwait(false);
               })

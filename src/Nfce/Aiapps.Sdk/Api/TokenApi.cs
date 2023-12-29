@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Aiapps.Sdk.Api
 {
     public abstract class TokenApi
     {
+        private int _maxRetry = 1;
 #if DEBUG
         protected string BaseAuthHttpsAddress { get; set; } = "https://auth.aiapps.com.br";
 #else
@@ -23,6 +21,8 @@ namespace Aiapps.Sdk.Api
 #endif
 
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(59);
+
+        public int MaxRetry { get => _maxRetry; set => _maxRetry = value; }
 
         protected static HttpClientHandler clientHandler = new HttpClientHandler();
         protected async Task<string> Token(string username, string password)

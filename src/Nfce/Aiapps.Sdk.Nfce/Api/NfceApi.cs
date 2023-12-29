@@ -17,11 +17,8 @@ namespace Aiapps.Sdk.Nfce.Api
         private string _routeDanfe = "api/nfce/baixardanfe";
         private string _routeXml = "api/nfce/baixarxml";
         private string _routeProtocol = "api/nfce/protocol";
-        private int _maxRetry = 1;
 
         private Credential _credential;
-
-        public int MaxRetry { get => _maxRetry; set => _maxRetry = value; }
 
         public NfceApi(Credential credential)
         {
