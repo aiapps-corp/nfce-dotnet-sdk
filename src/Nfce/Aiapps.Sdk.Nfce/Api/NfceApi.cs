@@ -170,7 +170,7 @@ namespace Aiapps.Sdk.Nfce.Api
               });
             return response;
         }
-        public async Task<string> GetProtocolAsync(string chaveAcesso)
+        public async Task<InvoiceInfo> GetProtocolAsync(string chaveAcesso)
         {
             if (string.IsNullOrWhiteSpace(_credential.Token))
                 _credential.Token = await Token(_credential.Email, _credential.Password);
@@ -186,9 +186,11 @@ namespace Aiapps.Sdk.Nfce.Api
             if (response.IsSuccessStatusCode == false)
                 return null;
 
+            if(response.StatusCode == HttpStatusCode.NotFound)
+                return null;
             var content = await response.Content.ReadAsStringAsync();
-            var protocol = JsonConvert.DeserializeObject<dynamic>(content);
-            return protocol.protocol;
+            var protocol = JsonConvert.DeserializeObject<InvoiceInfo>(content);
+            return protocol;
         }
 
         private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido)

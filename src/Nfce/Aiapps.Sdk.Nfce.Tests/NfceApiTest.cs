@@ -163,6 +163,20 @@ namespace Aiapps.Sdk.Nfce.Tests
             var protocol = await nfceApi.GetProtocolAsync("21211004228479000179650100000656491004181672");
             Assert.IsNull(protocol);
         }
+        [TestMethod]
+        public async Task EmitirAsync_Test()
+        {
+            var nfceApi = new NfceApi(new Credential
+            {
+                Email = "integracao2@cantopraia.com.br",
+                Password = "123123"
+            });
+            var json = @"{""Numero"":null,""Serie"":null,""DataHora"":""2023-12-28T02:49:38.69"",""Cfop"":""5.405"",""Cliente"":{""Documento"":""03072867038"",""Nome"":""EDUARDA COSTA DA ROSA"",""Email"":null,""Telefone"":null,""Sexo"":2,""DataNascimento"":""1998-10-28T00:00:00"",""Endereco"":{""Cep"":null,""Logradouro"":null,""Numero"":null,""Complemento"":null,""Bairro"":null},""Conta"":null,""TagConta"":null,""Titular"":null},""Canal"":{""Codigo"":null,""Nome"":null,""IconeUrl"":null},""Vendedor"":{""Codigo"":null,""Documento"":"""",""Nome"":null},""PontoVenda"":{""Codigo"":""6d6f4b21-e790-44e2-a5fc-9e6d360dcf7f"",""MacAddress"":""357400572684158"",""Nome"":""PAG16577""},""Itens"":[{""NCM"":""22029900"",""Cfop"":null,""EhTaxa"":false,""Customizacao"":[],""ProdutoId"":""98df9fbbbda344ffbd94bb00ccbbe1de"",""ProdutoNome"":""RED BULL TRADICIONAL"",""Quantidade"":1.00000,""QuantidadeMovimentacaoEstoque"":null,""ValorUnitario"":16.15,""Desconto"":0.00,""Uuid"":null}],""Pagamentos"":[{""DataVencimento"":null,""Tipo"":""05"",""Descricao"":""Cashless"",""Valor"":16.1500000,""Cartao"":{""Cnpj"":null,""Bandeira"":null,""Nsu"":null},""Referencia"":null}],""Entrega"":{""Frete"":0.0,""TipoFrete"":9,""Transportador"":{""Codigo"":null,""Documento"":null,""Nome"":null},""Endereco"":{""Cep"":null,""Logradouro"":null,""Numero"":null,""Complemento"":null,""Bairro"":null}},""IndicadorIntermediador"":null,""IntermediadorTransacao"":{""Cnpj"":null,""IdentificadorIntermediador"":null},""Desconto"":0.0,""ContaCliente"":null,""Referencia"":""9e55c31f-35ec-4690-8189-1888d8a081fd"",""Situacao"":null,""Assincrono"":true}";
+            var pedido = JsonConvert.DeserializeObject<Pedido>(json);
+            var response = await nfceApi.EmitirAsync(pedido);
+
+            Assert.AreEqual("Credêncial inválida para emissão de nfc-e", response.Erro);
+        }
 
         private static Credential ValidCredential = new Credential
         {

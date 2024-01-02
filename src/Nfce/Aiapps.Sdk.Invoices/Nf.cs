@@ -23,5 +23,10 @@ namespace Aiapps.Sdk.Invoices
         public string Referencia { get; set; }
         public string Erro { get; set; }
     }
+    public class InvoiceInfo
+    {
+        public string AccessKey { get; set; }
+        public string Protocol { get; set; }
+    }
 
 }
