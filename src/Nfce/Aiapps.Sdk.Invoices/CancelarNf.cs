@@ -10,8 +10,4 @@ namespace Aiapps.Sdk.Invoices
         public string Chave { get; set; }
         public string Motivo { get; set; }
     }
-    public class RetornoCancelamento
-    {
-        public string Protocolo { get; set; }
-    }
 }

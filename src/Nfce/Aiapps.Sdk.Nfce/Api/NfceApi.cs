@@ -17,6 +17,7 @@ namespace Aiapps.Sdk.Nfce.Api
         private string _routeDanfe = "api/nfce/baixardanfe";
         private string _routeXml = "api/nfce/baixarxml";
         private string _routeProtocol = "api/nfce/protocol";
+        private string _routeNotifyThirdParty = "api/nfce/notifyThirdParty";
 
         private Credential _credential;
 
@@ -24,6 +25,7 @@ namespace Aiapps.Sdk.Nfce.Api
         {
             _credential = credential ?? new Credential();
             BaseHttpsAddress = "https://invoices-api.aiapps.com.br";
+            //BaseHttpsAddress = "http://localhost:50188";
         }
 
         /// <summary>
@@ -192,6 +194,29 @@ namespace Aiapps.Sdk.Nfce.Api
             var protocol = JsonConvert.DeserializeObject<InvoiceInfo>(content);
             return protocol;
         }
+        public async Task NotifyThirdParty(NotifyThirdPartyNfResult value)
+        {
+            if (string.IsNullOrWhiteSpace(_credential.Token))
+                _credential.Token = await Token(_credential.Email, _credential.Password);
+
+            var response = await Policy
+              .Handle<Exception>()
+              .WaitAndRetryAsync(MaxRetry, (retry) => TimeSpan.FromSeconds(retry))
+              .ExecuteAsync(async () =>
+              {
+                  return await Policy
+                    .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.Unauthorized)
+                    .RetryAsync(1, onRetryAsync: async (exception, retryCount) =>
+                    {
+                        await RetryToken(_credential);
+                    })
+                    .ExecuteAsync(async () =>
+                    {
+                        var r = await HttpNotifyThirdPartyAsync(value);
+                        return r;
+                    }).ConfigureAwait(false);
+              }).ConfigureAwait(false);
+        }
 
         private async Task<HttpResponseMessage> HttpEmitirAsync(Pedido pedido)
         {
@@ -259,6 +284,20 @@ namespace Aiapps.Sdk.Nfce.Api
                 httpClient.Timeout = Timeout;
 
                 var response = await httpClient.GetAsync($"{_routeProtocol}?chaveAcesso={chaveAcesso}");
+                return response;
+            }
+        }
+
+        private async Task<HttpResponseMessage> HttpNotifyThirdPartyAsync(NotifyThirdPartyNfResult value)
+        {
+            using (var httpClient = new HttpClient(clientHandler, false))
+            {
+                httpClient.BaseAddress = new Uri(BaseHttpsAddress);
+                httpClient.DefaultRequestHeaders.ConfigAuthorizationBearer(_credential.Token);
+                httpClient.DefaultRequestHeaders.AcceptApplicationJson();
+                httpClient.Timeout = Timeout;
+
+                var response = await httpClient.PostAsync(_routeNotifyThirdParty, value.AsJson());
                 return response;
             }
         }
