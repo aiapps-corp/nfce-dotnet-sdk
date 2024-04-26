@@ -7,6 +7,7 @@ namespace Aiapps.Sdk.Invoices
 {
     public abstract class Nf
     {
+        public string Id { get; set; }
         public string Cnpj { get; set; }
         public string RazaoSocial { get; set; }
         public string Numero { get; set; }
