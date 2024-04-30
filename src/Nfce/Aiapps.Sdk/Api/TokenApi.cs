@@ -2,7 +2,9 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Aiapps.Sdk.Api
 {
@@ -32,7 +34,9 @@ namespace Aiapps.Sdk.Api
                 httpClient.BaseAddress = new Uri(BaseAuthHttpsAddress);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
                 httpClient.Timeout = Timeout;
-                var content = new StringContent($"grant_type=password&username={username}&password={password}");
+                var usernameEncoded = HttpUtility.UrlEncode(username);
+                var passwordEncoded = HttpUtility.UrlEncode(password);
+                var content = new StringContent($"grant_type=password&username={usernameEncoded}&password={passwordEncoded}");
                 var response = await httpClient.PostAsync("token", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
                 dynamic jsonObj = JsonConvert.DeserializeObject(responseContent);
