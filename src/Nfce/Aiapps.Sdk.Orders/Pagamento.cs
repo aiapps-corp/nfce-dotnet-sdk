@@ -41,6 +41,13 @@ namespace Aiapps.Sdk.Orders
         /// Código de referência do pagamento
         /// </summary>
         public string Referencia { get; set; }
+
+        /// <summary>
+        /// Informar o CNPJ do estabelecimento beneficiário do pagamento
+        /// </summary>
+        public string CnpjBeneficiarioPagamento { get; set; }
+
+
     }
 
 }
