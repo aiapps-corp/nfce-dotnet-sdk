@@ -10,11 +10,11 @@
     <Copyright>aiapps</Copyright>
     <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
-    <Version>1.0.11</Version>
+    <Version>1.0.13</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Polly" Version="8.4.0" />
+    <PackageReference Include="Polly" Version="8.4.2" />
   </ItemGroup>
 
   <ItemGroup>

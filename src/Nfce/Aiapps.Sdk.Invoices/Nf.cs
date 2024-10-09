@@ -20,6 +20,8 @@ namespace Aiapps.Sdk.Invoices
         public Item[] Itens { get; set; } = new Item[0];
         public string Url { get; set; }
         public Sefaz Sefaz { get; set; } = new Sefaz();
+        public string InfoInteresseContribuinte { get; set; }
+        public string InfoInteresseFisco { get; set; }
 
         public string Referencia { get; set; }
         public string Erro { get; set; }
