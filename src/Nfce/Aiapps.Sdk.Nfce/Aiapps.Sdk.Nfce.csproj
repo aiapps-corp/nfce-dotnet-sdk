@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aiapps-corp/nfce-dotnet-sdk</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.58</Version>
+    <Version>1.0.59</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,13 +1,12 @@
-﻿using Aiapps.Sdk;
-using Aiapps.Sdk.Crm;
+﻿using Aiapps.Sdk.Crm;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aiapps.Sdk.Orders
 {
     public class Pedido
     {
+        public const string CFOP_BONIFICACAO = "5.910";
+        public const string CFOP_PERDA = "5.927";
         public string Numero { get; set; }
         public string Serie { get; set; }
         public DateTime? DataHora { get; set; }
