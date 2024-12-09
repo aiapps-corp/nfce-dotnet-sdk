@@ -25,6 +25,8 @@ namespace Aiapps.Sdk.Invoices
 
         public string Referencia { get; set; }
         public string Erro { get; set; }
+        public DateTime? RemovidoEm { get; set; }
+        public string MotivoRemocao { get; set; }
     }
     public class InvoiceInfo
     {
