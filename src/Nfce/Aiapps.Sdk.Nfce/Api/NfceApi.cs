@@ -178,7 +178,7 @@ namespace Aiapps.Sdk.Nfce.Api
                 _credential.Token = await Token(_credential.Email, _credential.Password);
 
             var response = await Policy
-              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.NotFound)
+              .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.NotFound || r.StatusCode == HttpStatusCode.Accepted)
               .WaitAndRetryAsync(MaxRetry, (retry) => TimeSpan.FromSeconds(retry))
               .ExecuteAsync(async () =>
               {
