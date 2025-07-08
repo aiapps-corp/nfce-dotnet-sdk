@@ -90,6 +90,11 @@ namespace Aiapps.Sdk.Nfce.Api
                     nfce = TryParse(nfce, responseContent);
                     nfce.Erro = "Serviço indisponível";
                 }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    nfce = TryParse(nfce, responseContent);
+                    nfce.Erro = $"{responseContent}";
+                }
             }
             catch (Exception ex)
             {

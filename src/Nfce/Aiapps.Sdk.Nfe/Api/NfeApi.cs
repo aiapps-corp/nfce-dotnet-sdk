@@ -88,6 +88,11 @@ namespace Aiapps.Sdk.Nfe.Api
                     nfe = TryParse(nfe, responseContent);
                     nfe.Erro = "Serviço indisponível";
                 }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    nfe = TryParse(nfe, responseContent);
+                    nfe.Erro = $"{responseContent}";
+                }
             }
             catch (Exception ex)
             {
