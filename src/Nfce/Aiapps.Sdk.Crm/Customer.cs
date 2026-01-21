@@ -7,6 +7,9 @@ namespace Aiapps.Sdk.Crm
     {
         public string Documento { get; set; }
         public string Nome { get; set; }
+        public string RazaoSocial { get; set; }
+        public string IE { get; set; }
+        public string Cnae { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
         public Gender Sexo { get; set; } = Gender.None;
@@ -21,7 +24,10 @@ namespace Aiapps.Sdk.Crm
     {
         public string Document { get; set; }
         public string Name { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
+        public string IE { get; set; }
+        public string Cnae { get; set; }
         public string Phone { get; set; }
         public Gender Gender { get; set; } = Gender.None;
         public DateTime? Birthday { get; set; }

@@ -12,6 +12,9 @@ namespace Aiapps.Sdk
         public string Numero { get; set; }
         public string Complemento { get; set; }
         public string Bairro { get; set; }
+        public string Municipio { get; set; }
+        public string CodigoMunicipio { get; set; }
+        public string UF { get; set; }
     }
     public class Address
     {
@@ -20,5 +23,8 @@ namespace Aiapps.Sdk
         public string Number { get; set; }
         public string Complement { get; set; }
         public string Neighborhood { get; set; }
+        public string City { get; set; }
+        public string CityCode { get; set; }
+        public string StateInitials { get; set; }
     }
 }
