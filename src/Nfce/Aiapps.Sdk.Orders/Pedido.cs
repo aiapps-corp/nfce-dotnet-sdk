@@ -21,6 +21,8 @@ namespace Aiapps.Sdk.Orders
         public IndicadorIntermediador? IndicadorIntermediador { get; set; }
         public IntermediadorTransacao IntermediadorTransacao { get; set; } = new IntermediadorTransacao();
         public decimal Desconto { get; set; }
+        public bool? EhOperacaoComConsumidorFinal { get; set; } = true;
+        public IndicadorPresencaComprador? IndicadorPresencaComprador { get; set; } = Orders.IndicadorPresencaComprador.OperacaoPresencial;
         public string ContaCliente { get; set; }
         public string Referencia { get; set; }
         public string Situacao { get; set; }
@@ -43,5 +45,37 @@ namespace Aiapps.Sdk.Orders
         /// 1-Operação em site ou plataforma de terceiros(intermediadores/marketplace)
         /// </summary>
         ComIntermediador = 1,
+    }
+
+    public enum IndicadorPresencaComprador
+    {
+        /// <summary>
+        /// 0=Não se aplica
+        /// </summary>
+        NaoSeAplica = 0,
+        /// <summary>
+        /// 1=Operação presencial
+        /// </summary>
+        OperacaoPresencial = 1,
+        /// <summary>
+        /// 2=Operação não presencial, pela Internet
+        /// </summary>
+        OperacaoNaoPresencialInternet = 2,
+        /// <summary>
+        /// 3=Operação não presencial, Teleatendimento
+        /// </summary>
+        OperacaoNaoPresencialTeleatendimento = 3,
+        /// <summary>
+        /// 4=Operação não presencial, entrega em domicílio
+        /// </summary>
+        OperacaoNaoPresencialEntregaDomicilio = 4,
+        /// <summary>
+        /// 5=Operação presencial, fora do estabelecimento
+        /// </summary>
+        OperacaoPresencialForaEstabelecimento = 5,
+        /// <summary>
+        /// 9=Outros
+        /// </summary>
+        Outros = 9,
     }
 }
